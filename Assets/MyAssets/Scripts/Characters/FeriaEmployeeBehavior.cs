@@ -136,7 +136,8 @@ public class FeriaEmployeeBehavior : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotFinal, 400 * Time.deltaTime);
             if (transform.rotation == _rotFinal)
             {
-                Debug.Log("Rot: " + transform.rotation);
+                Debug.Log("Rot1: " + _rotFinal);
+                Debug.Log("Rot2: " + transform.rotation);
                 move = false;
             }
         }
@@ -172,7 +173,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     {
         workersAction = _newAction;
 
-        Vector3 _destination;
+        //Vector3 _destination;
         /*switch (workersAction)
         {
             case WorkersActions.None:

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -106,7 +107,24 @@ public class FeriaBuildings : MonoBehaviour
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
         workerTransformData.Add(_transformData);
 
-
+        // Tiendas1 trabajadores: 11 - 50
+        for (int i = 0; i < 40; i++)
+        {
+            int _v = i / 8;
+            int _w = (int)Math.Pow(-1, _v);
+            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -1.5f * _w);
+            _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * _w, 0f);
+            workerTransformData.Add(_transformData);
+        }
+        // Tiendas1 clientes: 61 - 100
+        for (int i = 0; i < 40; i++)
+        {
+            int _v = i / 8;
+            int _w = (int)Math.Pow(-1, _v);
+            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -4f * _w);
+            _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * - _w, 0f);
+            workerTransformData.Add(_transformData);
+        }
 
 
 
