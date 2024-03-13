@@ -6,25 +6,15 @@ using UnityEngine.AI;
 public class ChildrenSittingOnCarousel : MonoBehaviour
 {
     #region Variables
+    // position: 0, 0.67, -0.28
+    // leftFoot position: -0.15, 0.074, 0.2
+    // leftHand position: -0.054, 0.61, 0.34
+    // leftHand rotation: 0, 0, 90
     public Transform leftFoot;
     public Transform rightFoot;
     public Transform leftHand;
     public Transform rightHand;
     Animator anim;
-
-
-    // position: 0, 0.67, -0.28
-    // leftFoot position: -0.15, 0.074, 0.2
-    // leftHand position: -0.054, 0.61, 0.34
-    // leftHand rotation: 0, 0, 90
-
-
-
-
-
-
-
-
     #endregion
 
     #region Funciones Unity
@@ -32,19 +22,28 @@ public class ChildrenSittingOnCarousel : MonoBehaviour
     {
         anim = GetComponent<Animator>();
 
+        leftFoot.localPosition = new Vector3(-0.15f, 0.01f, 0.1f);
+        rightFoot.localPosition = new Vector3(0.15f, 0.01f, 0.1f);
+        leftHand.localPosition = new Vector3(-0.08f, 0.61f, 0.25f);
+        rightHand.localPosition = new Vector3(0.08f, 0.61f, 0.25f);
+
+        leftFoot.localRotation = Quaternion.identity;
+        rightFoot.localRotation = Quaternion.identity;
+        leftHand.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        rightHand.localRotation = Quaternion.Euler(0f, 0f, -90f);
     }
 
     private void Start()
     {
-        //leftFoot.localPosition = new Vector3(-0.15f, 0.74f, 0.1f);
-        //rightFoot.localPosition = new Vector3(0.15f, 0.74f, -0.1f);
-        //leftHand.localPosition = new Vector3(-0.08f, 1.38f, -0.03f);
-        //rightHand.localPosition = new Vector3(0.08f, 1.38f, -0.03f);
+        leftFoot.localPosition = new Vector3(-0.15f, 0.01f, 0.1f);
+        rightFoot.localPosition = new Vector3(0.15f, 0.01f, 0.1f);
+        leftHand.localPosition = new Vector3(-0.08f, 0.61f, 0.25f);
+        rightHand.localPosition = new Vector3(0.08f, 0.61f, 0.25f);
 
-        //leftFoot.localRotation = Quaternion.identity;
-        //rightFoot.localRotation = Quaternion.identity;
-        //leftHand.localRotation = Quaternion.Euler(0f, 0f, 90f);
-        //rightHand.localRotation = Quaternion.Euler(0f, 0f, -90f);
+        leftFoot.localRotation = Quaternion.identity;
+        rightFoot.localRotation = Quaternion.identity;
+        leftHand.localRotation = Quaternion.Euler(0f, 0f, 90f);
+        rightHand.localRotation = Quaternion.Euler(0f, 0f, -90f);
     }
 
     private void OnAnimatorIK(int layerIndex)
