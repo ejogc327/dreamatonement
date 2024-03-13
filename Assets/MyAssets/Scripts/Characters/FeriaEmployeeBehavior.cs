@@ -6,10 +6,10 @@ using UnityEngine.AI;
 public class FeriaEmployeeBehavior : MonoBehaviour
 {
     #region 1. Variables
-    public WorkersActions workersAction;
+    public EmployeesActions employeesAction;
     //public Transform employeeOrigin;
     //public FeriaCharacters employeesValues;
-    public int workersActionIndex;
+    public int employeesActionIndex;
     public bool play;
     public bool move;
     public Vector3 destination;
@@ -40,7 +40,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateWorkersActions();
+        UpdateEmployeesActions();
     }
 
     #endregion
@@ -107,13 +107,13 @@ public class FeriaEmployeeBehavior : MonoBehaviour
         employees[8].position = _pos;*/
     }
 
-    void UpdateWorkersActions()
+    void UpdateEmployeesActions()
     {
         if (play)
         {
             play = false;
             move = true;
-            Vector3 _destination = FeriaBuildings.instance.workerTransformData[workersActionIndex].position;
+            Vector3 _destination = FeriaBuildings.instance.workerTransformData[employeesActionIndex].position;
 
             agent.isStopped = false;
             agent.SetDestination(_destination);
@@ -131,7 +131,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
             anim.SetBool("walk", false);
 
             //if (rotating)
-            Quaternion _rotFinal = FeriaBuildings.instance.workerTransformData[workersActionIndex].rotation;
+            Quaternion _rotFinal = FeriaBuildings.instance.workerTransformData[employeesActionIndex].rotation;
             
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotFinal, 400 * Time.deltaTime);
             if (transform.rotation == _rotFinal)
@@ -169,9 +169,9 @@ public class FeriaEmployeeBehavior : MonoBehaviour
 
     }
 
-    void SetWorkersAction(WorkersActions _newAction)
+    void SetEmployeesAction(EmployeesActions _newAction)
     {
-        workersAction = _newAction;
+        employeesAction = _newAction;
 
         //Vector3 _destination;
         /*switch (workersAction)
@@ -206,7 +206,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     }
     #endregion
 
-    public enum WorkersActions
+    public enum EmployeesActions
     {
         None,
         GoToEntry,

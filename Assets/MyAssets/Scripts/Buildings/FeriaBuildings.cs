@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FeriaBuildings : MonoBehaviour
@@ -26,6 +27,9 @@ public class FeriaBuildings : MonoBehaviour
         instance = this;
 
         SetBuildingTransforms();
+
+        //Type type = Type.GetType("NoriaRotation");
+        //gameObject.AddComponent(type);
     }
 
     private void Start()
@@ -139,8 +143,26 @@ public class FeriaBuildings : MonoBehaviour
         workerTransformData.Add(_transformData);
     }
 
+    public TransformData GetCarouselTransformData()
+    {
+        TransformData _transformData = new TransformData();
+        _transformData.position = carousel.position;
+        _transformData.rotation = carousel.rotation;
+        return _transformData;
+    }
+
     //public TransformData 
     #endregion
+
+    public enum Buildings
+    {
+        Entry, Ticket, Info, RestroomMale, RestroomFemale,
+        Shop1, Shop2, Shop3, Shop4, Shop5, Shop6, Shop7, Shop8, Shop9, Shop10,
+        Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
+        Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
+        Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
+        Carousel, Noria
+    }
 
 
 }

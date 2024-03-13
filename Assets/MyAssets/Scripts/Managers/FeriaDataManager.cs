@@ -25,6 +25,11 @@ public class FeriaDataManager : MonoBehaviour
     #region Funciones Propias
 
     #endregion
+
+    public enum FeriaStates
+    {
+        Start
+    }
 }
 
 [Serializable]

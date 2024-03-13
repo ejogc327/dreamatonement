@@ -500,6 +500,7 @@ MonoBehaviour:
   gameState: 0
   sceneLoadedAfterTransition: 0
   gameStateAfterTransition: 0
+  levelActual: 0
 --- !u!1 &7314954319591351777
 GameObject:
   m_ObjectHideFlags: 0

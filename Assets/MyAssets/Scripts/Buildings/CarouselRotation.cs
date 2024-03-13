@@ -10,6 +10,7 @@ using UnityEngine;
 public class CarouselRotation : MonoBehaviour
 {
     #region 1. Variables
+    public static CarouselRotation instance;
     public CarouselStates state;
     Transform rotationObject;
     public float speedRot;
@@ -18,11 +19,14 @@ public class CarouselRotation : MonoBehaviour
     public bool play;
 
     public float counter;
+
+
     #endregion
 
     #region 2. Funciones Unity
     private void Awake()
     {
+        instance = this;
         rotationObject = transform.GetChild(1).transform;
         state = CarouselStates.Stopped;
         //speedRot = 400f;
