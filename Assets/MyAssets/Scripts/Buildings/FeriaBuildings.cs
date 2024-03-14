@@ -62,7 +62,6 @@ public class FeriaBuildings : MonoBehaviour
     {
         TransformData _transformData = new TransformData();
 
-        // Zero: 0
         _transformData.position = Vector3.zero;
         _transformData.rotation = Quaternion.identity;
         workerTransformData.Add(_transformData);
@@ -89,7 +88,7 @@ public class FeriaBuildings : MonoBehaviour
         _transformData.position = info.position + new Vector3(2f, 0f, -4f);
         workerTransformData.Add(_transformData);
 
-        // Información cliente: 6- 7
+        // Información cliente:6- 7
         _transformData.position = info.position + new Vector3(4f, 0f, -2f);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
         workerTransformData.Add(_transformData);
@@ -162,6 +161,11 @@ public class FeriaBuildings : MonoBehaviour
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
         Carousel, Noria
+    }
+
+    public enum EmployeesPositions
+    {
+        Entry, Ticket, Info1, Info2, 
     }
 
 
