@@ -113,7 +113,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
         {
             play = false;
             move = true;
-            Vector3 _destination = FeriaBuildings.instance.workerTransformData[employeesActionIndex].position;
+            Vector3 _destination = FeriaBuildings.instance.employeesTransformData[employeesActionIndex].position;
 
             agent.isStopped = false;
             agent.SetDestination(_destination);
@@ -131,7 +131,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
             anim.SetBool("walk", false);
 
             //if (rotating)
-            Quaternion _rotFinal = FeriaBuildings.instance.workerTransformData[employeesActionIndex].rotation;
+            Quaternion _rotFinal = FeriaBuildings.instance.employeesTransformData[employeesActionIndex].rotation;
             
             transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotFinal, 400 * Time.deltaTime);
             if (transform.rotation == _rotFinal)
