@@ -450,8 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiSounds:
-  - {fileID: 8300000, guid: 01e13f03a9c0f5049b1dc8f56bebae92, type: 3}
-  - {fileID: 8300000, guid: cf5e2cb00393ee942804447f42d2e648, type: 3}
+  - {fileID: 8300000, guid: 6e79f4e950bfd5e4d854dc52ce9c1cc0, type: 3}
+  - {fileID: 8300000, guid: f8ba4937730576748ac11c682ab64521, type: 3}
 --- !u!1 &6811659297217992273
 GameObject:
   m_ObjectHideFlags: 0

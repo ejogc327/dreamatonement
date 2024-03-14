@@ -85,7 +85,7 @@ public class PauseMenuManager : MonoBehaviour
     public void BtnContinue_Pressed()
     {
         HideAllPanels();
-        GameManager.instance.SetGameState(GameStates.Playing);
+        GameManager.instance.SetGameState(GameStates.Gameplay);
     }
 
     public void BtnRestart_Pressed()
@@ -101,7 +101,7 @@ public class PauseMenuManager : MonoBehaviour
     public void BtnConfirmRestart_Pressed()
     {
         MusicManager.instance.Restart();
-        GameManager.instance.InfoTransition(1, GameStates.Playing);
+        GameManager.instance.InfoTransition(1, GameStates.Gameplay);
         GameManager.instance.SetGameState(GameStates.Loading);
     }
 

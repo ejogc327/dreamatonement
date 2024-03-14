@@ -19,10 +19,14 @@ public class SaraMovement : MonoBehaviour
     public float speedWalk;
     public float speedRun;
 
+    public float forceJump;
+    public float maxHeight;
+    public float rayToBottomLength;
+
     Transform cam;
     Rigidbody rb;
     Animator anim;
-
+    Transform cmFollow;
     #endregion
 
     #region Funciones Unity
@@ -33,6 +37,8 @@ public class SaraMovement : MonoBehaviour
         cam = Camera.main.transform;
         rb = GetComponent<Rigidbody>();
         anim = transform.GetChild(0).GetComponent<Animator>();
+
+        cmFollow = transform.GetChild(1);
     }
 
     // Start is called before the first frame update
@@ -45,16 +51,20 @@ public class SaraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (FeriaManager.instance.IsKinematics()) return;
         SetVirtualAxis();
         SetMoveDirection();
         UpdateMoveState();
         SoftedRotation();
+        Jump();
         //Run();
     }
 
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + dirMove * speedMove * Time.fixedDeltaTime);
+        //rb.velocity = 
+        RaycastToBottom();
     }
 
     #endregion
@@ -118,6 +128,30 @@ public class SaraMovement : MonoBehaviour
         }
     }
 
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && jumpState == JumpStates.Grounded)
+        {
+            SetJumpState(JumpStates.Jumping);
+        }
+    }
+    void RaycastToBottom()
+    {
+        Ray _ray = new Ray(cmFollow.position, Vector3.down);
+        RaycastHit hit;
+        bool result = Physics.Raycast(_ray, out hit, rayToBottomLength);
+
+        if (result)
+        {
+            if (jumpState != JumpStates.Grounded && jumpState != JumpStates.Jumping)
+                SetJumpState(JumpStates.Grounded);
+        }
+        else
+        {
+            if (jumpState != JumpStates.Falling && rb.velocity.y < 0f)
+                SetJumpState(JumpStates.Falling);
+        }
+    }
 
     public void SetMoveState(MoveStates _newState)
     {
@@ -138,17 +172,23 @@ public class SaraMovement : MonoBehaviour
                 break;
         }
     }
-    public void SetJumplingState(JumpStates _newState)
+    public void SetJumpState(JumpStates _newState)
     {
         jumpState = _newState;
 
         switch (jumpState)
         {
             case JumpStates.Grounded:
+                anim.SetInteger("jump", 0);
                 break;
             case JumpStates.Jumping:
+                rb.velocity = Vector3.zero;
+                float _forceJump = Mathf.Sqrt(maxHeight * -forceJump * Physics.gravity.y * rb.mass);
+                rb.AddForce(Vector3.up * _forceJump, ForceMode.VelocityChange);
+                anim.SetInteger("jump", 1);
                 break;
             case JumpStates.Falling:
+                anim.SetInteger("jump", 2);
                 break;
         }
     }

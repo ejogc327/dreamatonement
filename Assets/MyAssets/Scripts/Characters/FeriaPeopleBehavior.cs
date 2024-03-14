@@ -110,7 +110,7 @@ public class FeriaPeopleBehavior : MonoBehaviour
     {
         peopleAction = _newAction;
 
-        Vector3 _destination;
+        //Vector3 _destination;
         switch (peopleAction)
         {
             case PeopleActions.None:

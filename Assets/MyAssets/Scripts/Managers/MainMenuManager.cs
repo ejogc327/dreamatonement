@@ -14,6 +14,8 @@ public class MainMenuManager : MonoBehaviour
     public GameObject panelHall;
     public GameObject panelConfirmExit;
 
+    float timer;
+
     #endregion
 
     #region Funciones Unity
@@ -43,7 +45,7 @@ public class MainMenuManager : MonoBehaviour
     {
         SoundManager.instance.PlayUi(0);
         GameManager.instance.SetLevel(Levels.Level1);
-        GameManager.instance.InfoTransition(1, GameStates.Playing);
+        GameManager.instance.InfoTransition(1, GameStates.Gameplay);
         GameManager.instance.SetGameState(GameStates.Loading);
     }
 
@@ -61,10 +63,18 @@ public class MainMenuManager : MonoBehaviour
 
     public void BtnCancelExit_Pressed()
     {
-        SoundManager.instance.PlayUi(1);
+        SoundManager.instance.PlayUi(1);        
         panelHall.SetActive(true);
         panelConfirmExit.SetActive(false);
     }
+
+    IEnumerator BtnExit_Coroutine()
+    {
+        yield return new WaitForSeconds(1.2f);
+        panelHall.SetActive(false);
+        panelConfirmExit.SetActive(true);
+    }
+
 
     #endregion
 }

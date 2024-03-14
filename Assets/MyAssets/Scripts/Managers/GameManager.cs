@@ -56,12 +56,12 @@ public class GameManager : MonoBehaviour
         if (_scene == 1)
         {
             levelActual = Levels.Level1;
-            SetGameState(GameStates.Playing);
+            SetGameState(GameStates.Gameplay);
         }
         if (_scene == 2)
         {
             levelActual = Levels.Level2;
-            SetGameState(GameStates.Playing);
+            SetGameState(GameStates.Gameplay);
         }
     }
 
@@ -73,13 +73,13 @@ public class GameManager : MonoBehaviour
             if (gameState == GameStates.MainMenu)
             {
                 SetLevel(Levels.Level1);
-                InfoTransition(1, GameStates.Playing);
+                InfoTransition(1, GameStates.Gameplay);
                 SetGameState(GameStates.Loading);
             }
             else if (gameState == GameStates.PauseMenu && levelActual == Levels.Level1)
             {
                 SetLevel(Levels.Level2);
-                InfoTransition(2, GameStates.Playing);
+                InfoTransition(2, GameStates.Gameplay);
                 SetGameState(GameStates.Loading);
             }
             else if (gameState == GameStates.PauseMenu && levelActual == Levels.Level2)
@@ -95,13 +95,13 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (gameState == GameStates.Playing)
+            if (gameState == GameStates.Gameplay)
             {
                 SetGameState(GameStates.PauseMenu);
             }
             else if (gameState == GameStates.PauseMenu)
             {
-                SetGameState(GameStates.Playing);
+                SetGameState(GameStates.Gameplay);
             }
         }
     }
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
                 TransitionManager.instance.Transition_FadeInStart();
 
-                if (gameStateAfterTransition == GameStates.Playing)
+                if (gameStateAfterTransition == GameStates.Gameplay)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
                     Cursor.visible = true;
                 }
                 break;
-            case GameStates.Playing:
+            case GameStates.Gameplay:
                 Time.timeScale = 1f; 
 
                 Cursor.lockState = CursorLockMode.Locked;
@@ -175,8 +175,8 @@ public class GameManager : MonoBehaviour
 public enum GameStates 
 { 
     MainMenu, 
-    Loading, 
-    Playing,
+    Loading,
+    Gameplay,
     PauseMenu 
 }
 

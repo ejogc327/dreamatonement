@@ -15,6 +15,7 @@ public class FeriaManager : MonoBehaviour
     Animator anim;
     public CinemachineVirtualCamera vcIntro;
     public CinemachineVirtualCamera vcThirdPersonSara;
+    bool isKinematics;
     #endregion
 
     #region Funciones Unity
@@ -30,7 +31,7 @@ public class FeriaManager : MonoBehaviour
 
     private void Start()
     {
-        SetFeriaState(FeriaStates.Intro);
+        SetFeriaState(FeriaStates.Gameplay1);
 
     }
 
@@ -46,6 +47,10 @@ public class FeriaManager : MonoBehaviour
 
     }
 
+    public bool IsKinematics()
+    {
+        return isKinematics;
+    }
 
     public void SetFeriaState(FeriaStates _newState)
     {
@@ -53,11 +58,13 @@ public class FeriaManager : MonoBehaviour
         switch (state)
         {
             case FeriaStates.Intro:
+                isKinematics = true;
                 vcThirdPersonSara.m_Priority = 0;
                 vcIntro.m_Priority = 2;
                 anim.Play("Intro", 0, 0f);
                 break;
             case FeriaStates.Gameplay1:
+                isKinematics = false;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
                 break;
