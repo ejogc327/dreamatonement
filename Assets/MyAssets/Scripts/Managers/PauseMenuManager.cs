@@ -11,6 +11,7 @@ public class PauseMenuManager : MonoBehaviour
     #region Variables
     public static PauseMenuManager instance;
     public GameObject panelHall;
+    public GameObject panelInventory;
     public GameObject panelConfirmRestart;
     public GameObject panelConfirmExit;
 
@@ -48,7 +49,8 @@ public class PauseMenuManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         panelHall.SetActive(false);
-       // panelConfirmRestart.SetActive(false); 
+        panelInventory.SetActive(false);
+        // panelConfirmRestart.SetActive(false); 
         panelConfirmExit.SetActive(false);
     }
 
@@ -56,6 +58,15 @@ public class PauseMenuManager : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         panelHall.SetActive(true);
+        panelInventory.SetActive(false);
+        //panelConfirmRestart.SetActive(false); 
+        panelConfirmExit.SetActive(false);
+    }
+    public void ShowPanelInventory()
+    {
+        pauseMenu.SetActive(true);
+        panelHall.SetActive(false);
+        panelInventory.SetActive(true);
         //panelConfirmRestart.SetActive(false); 
         panelConfirmExit.SetActive(false);
     }
@@ -63,6 +74,7 @@ public class PauseMenuManager : MonoBehaviour
     void ShowPanelConfirmRestart()
     {
         panelHall.SetActive(false);
+        panelInventory.SetActive(false);
         //panelConfirmRestart.SetActive(true); 
         panelConfirmExit.SetActive(false);
     }
@@ -70,6 +82,7 @@ public class PauseMenuManager : MonoBehaviour
     void ShowPanelConfirmExit()
     {
         panelHall.SetActive(false);
+        panelInventory.SetActive(false);
         //panelConfirmRestart.SetActive(false); 
         panelConfirmExit.SetActive(true);
     }
@@ -93,9 +106,24 @@ public class PauseMenuManager : MonoBehaviour
         ShowPanelConfirmRestart();
     }
 
+    public void BtnInventory_Pressed()
+    {
+        ShowPanelInventory();
+    }
+
     public void BtnExit_Pressed()
     {
         ShowPanelConfirmExit();
+    }
+
+    public void BtnInventoryPausa_Pressed()
+    {
+        ShowPanelHall();
+    }
+    public void BtnInventoryContinue_Pressed()
+    {
+        HideAllPanels();
+        GameManager.instance.SetGameState(GameStates.Gameplay);
     }
 
     public void BtnConfirmRestart_Pressed()

@@ -27,7 +27,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     {
         //CreateEmployees();
         agent = GetComponent<NavMeshAgent>();
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        //anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Start is called before the first frame update

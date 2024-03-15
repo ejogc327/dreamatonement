@@ -29,6 +29,9 @@ public class FeriaBuildings : MonoBehaviour
         instance = this;
 
         SetBuildingsTransforms();
+        SetBuildingsTransformData();
+        SetEmployeesTransformData();
+        SetCustomersTransformData();
 
         //Type type = Type.GetType("NoriaRotation");
         //gameObject.AddComponent(type);
@@ -36,9 +39,6 @@ public class FeriaBuildings : MonoBehaviour
 
     private void Start()
     {
-        SetBuildingsTransformData();
-        SetEmployeesTransformData();
-        SetCustomersTransformData();
     }
     #endregion
 
