@@ -13,6 +13,7 @@ public class FeriaManager : MonoBehaviour
 
     //Transform cam;
     Animator anim;
+    public CinemachineVirtualCamera vc0;
     public CinemachineVirtualCamera vcIntro;
     public CinemachineVirtualCamera vcThirdPersonSara;
     bool isKinematics;
@@ -31,7 +32,7 @@ public class FeriaManager : MonoBehaviour
 
     private void Start()
     {
-        SetFeriaState(FeriaStates.Gameplay1);
+        SetFeriaState(FeriaStates.Intro);
 
     }
 
@@ -59,12 +60,15 @@ public class FeriaManager : MonoBehaviour
         {
             case FeriaStates.Intro:
                 isKinematics = true;
+                vc0.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 0;
                 vcIntro.m_Priority = 2;
-                anim.Play("Intro", 0, 0f);
+                anim.SetInteger("state", 1);
+                //anim.Play("Intro", 0, 0f);
                 break;
             case FeriaStates.Gameplay1:
                 isKinematics = false;
+                vc0.m_Priority = 0;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
                 break;
@@ -75,6 +79,7 @@ public class FeriaManager : MonoBehaviour
     {
         SetFeriaState(FeriaStates.Gameplay1);
         anim.enabled = false;
+        anim.SetInteger("state", 2);
     }
 
     #endregion

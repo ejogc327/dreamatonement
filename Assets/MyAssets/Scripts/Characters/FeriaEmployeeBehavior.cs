@@ -25,7 +25,6 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     #region 2. Funciones Unity
     void Awake()
     {
-        //CreateEmployees();
         agent = GetComponent<NavMeshAgent>();
         //anim = transform.GetChild(0).GetComponent<Animator>();
     }
@@ -34,7 +33,6 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     void Start()
     {
         destination = Vector3.zero;
-        //SetEmployeesPosition();
     }
 
     // Update is called once per frame
@@ -46,66 +44,6 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     #endregion
 
     #region 3. Funciones Propias
-    void CreateEmployees()
-    {
-        //employees = new Transform[40];
-        //for (int i = 0; i < employees.Length; i++)
-        //{
-        //    Vector3 _pos = Vector3.zero;
-        //    Quaternion _rot = Quaternion.identity;
-        //    employees[i] = Instantiate(employeeOrigin, _pos, _rot);
-        //    employees[i].SetParent(transform);
-        //}
-    }
-
-    void SetEmployeesPosition()
-    {
-        /*Vector3 _pos;
-
-        _pos = FeriaBuildings.instance.GetEntryPosition();
-        employees[0].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetTiquetPosition();
-        _pos.x += -1.5f;
-        _pos.z += 1.5f;
-        employees[1].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetInfoPosition();
-        _pos.x += 1.5f;
-        _pos.z += -1.5f;
-        employees[2].position = _pos;
-        _pos.z += -4f;
-        employees[3].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetRestroomMalePosition();
-        _pos.x += -0.5f;
-        _pos.z += 2f;
-        employees[4].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetRestroomFemalePosition();
-        _pos.x += 0.5f;
-        _pos.z += 2f;
-        employees[5].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetRestroomFemalePosition();
-        _pos.x += 0.5f;
-        _pos.z += 2f;
-        employees[5].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetCarouselPosition();
-        _pos.x += 0.5f;
-        _pos.z += -9f;
-        employees[6].position = _pos;
-
-        _pos = FeriaBuildings.instance.GetNoriaPosition();
-        _pos.x += -10f;
-        _pos.z += 5f;
-        employees[7].position = _pos;
-        _pos.x += 10.5f;
-        _pos.y += 6f;
-        _pos.z += -3f;
-        employees[8].position = _pos;*/
-    }
 
     void UpdateEmployeesActions()
     {

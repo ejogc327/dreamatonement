@@ -106,6 +106,12 @@ public class FeriaPeopleBehavior : MonoBehaviour
         }
     }
 
+    void MakeCircularRoute()
+    {
+        //if ()
+    }
+
+
     void SetPeopleAction(PeopleActions _newAction)
     {
         peopleAction = _newAction;
@@ -114,6 +120,8 @@ public class FeriaPeopleBehavior : MonoBehaviour
         switch (peopleAction)
         {
             case PeopleActions.None:
+                agent.isStopped = true;
+                anim.SetBool("walk", false);
                 break;
             case PeopleActions.GoToEntry:
                 //_destination = FeriaBuildings.instance.GetEntryTransformData().position;
@@ -142,6 +150,8 @@ public class FeriaPeopleBehavior : MonoBehaviour
             case PeopleActions.TranslateToCarousel:
                 //transform.Translate()
                 break;
+            case PeopleActions.MakeCircularRoute:
+                break;
         }
     }
     #endregion
@@ -154,7 +164,8 @@ public class FeriaPeopleBehavior : MonoBehaviour
         GoToInfo1,
         GoToInfo2,
         GoToInfo3,
-        GoToCarousel, 
+        GoToCarousel,
+        MakeCircularRoute,
         TranslateToCarousel
     }
 }

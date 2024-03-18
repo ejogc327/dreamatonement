@@ -20,7 +20,7 @@ public class FeriaBuildings : MonoBehaviour
 
     public List<TransformData> buildingsTransformData = new List<TransformData>();
     public List<TransformData> employeesTransformData = new List<TransformData>();
-    public List<TransformData> customersTransformData = new List<TransformData>();
+    public List<TransformData> peopleTransformData = new List<TransformData>();
     #endregion
 
     #region 2. Funciones Unity
@@ -31,7 +31,7 @@ public class FeriaBuildings : MonoBehaviour
         SetBuildingsTransforms();
         SetBuildingsTransformData();
         SetEmployeesTransformData();
-        SetCustomersTransformData();
+        SetPeopleTransformData();
 
         //Type type = Type.GetType("NoriaRotation");
         //gameObject.AddComponent(type);
@@ -101,12 +101,35 @@ public class FeriaBuildings : MonoBehaviour
             buildingsTransformData.Add(_transformData);
         }
 
-        // Carousel: 45
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        // Shops1: 45 - 47
+        _transformData.position = new Vector3(10f, 0f, 13.5f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(23.5f, 0f, 13.5f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(37f, 0f, 13.5f);
+        peopleTransformData.Add(_transformData);
+        // Shops2: 48 - 50
+        _transformData.position = new Vector3(10f, 0f, 4f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(23.5f, 0f, 4f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(37f, 0f, 4f);
+        peopleTransformData.Add(_transformData);
+        // Shops3: 51 - 53
+        _transformData.position = new Vector3(10f, 0f, -5.5f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(23.5f, 0f, -5.5f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(37f, 0f, -5.5f);
+        peopleTransformData.Add(_transformData);
+
+        // Carousel: 54
         _transformData.position = carousel.position;
         _transformData.rotation = Quaternion.identity;
         buildingsTransformData.Add(_transformData);
 
-        // Noria: 46
+        // Noria: 55
         _transformData.position = noria.position + new Vector3(-4.5f, 0f, 1.5f);
         _transformData.rotation = Quaternion.identity;
         buildingsTransformData.Add(_transformData);
@@ -154,41 +177,43 @@ public class FeriaBuildings : MonoBehaviour
             _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * _w, 0f);
             employeesTransformData.Add(_transformData);
         }
+
+
     }
 
-    void SetCustomersTransformData()
+    void SetPeopleTransformData()
     {
         TransformData _transformData = new TransformData();
 
         // Entrada: 0
         _transformData.position = Vector3.zero;
         _transformData.rotation = Quaternion.identity;
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Ticket: 1 - 2
         _transformData.position = ticket.position + new Vector3(-4f, 0f, 1.5f);
         _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
         _transformData.position = ticket.position + new Vector3(-4f, 0f, 1.5f);
         _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Información: 3 - 4
         _transformData.position = info.position + new Vector3(4f, 0f, -2f);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
         _transformData.position = info.position + new Vector3(4f, 0f, -4f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Baño de hombre: 5
         _transformData.position = restroomMale.position + new Vector3(1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Baño de mujer: 6
         _transformData.position = restroomFemale.position + new Vector3(-1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Tiendas: 7 - 46
         for (int i = 0; i < 40; i++)
@@ -197,18 +222,50 @@ public class FeriaBuildings : MonoBehaviour
             int _w = (int)Math.Pow(-1, _v);
             _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -4f * _w);
             _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * -_w, 0f);
-            customersTransformData.Add(_transformData);
+            peopleTransformData.Add(_transformData);
         }
 
         // Carrusel: 47
         _transformData.position = carousel.position + new Vector3(1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
 
         // Noria: 48
         _transformData.position = noria.position + new Vector3(-1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
-        customersTransformData.Add(_transformData);
+        peopleTransformData.Add(_transformData);
+
+
+
+
+        // Extra4: 52
+        _transformData.position = new Vector3(23.6f, 0f, 13.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra5: 53
+        _transformData.position = new Vector3(23.6f, 0f, 4f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra6: 54
+        _transformData.position = new Vector3(23.6f, 0f, -6f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra7: 55
+        _transformData.position = new Vector3(-8.5f, 0f, 13.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra8: 56
+        _transformData.position = new Vector3(-8.5f, 0f, 13.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra9: 57
+        _transformData.position = new Vector3(-8.5f, 0f, 13.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Extra10: 58
+        _transformData.position = new Vector3(-8.5f, 0f, 13.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
     }
 
     #endregion
@@ -220,6 +277,7 @@ public class FeriaBuildings : MonoBehaviour
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
+        Shops1Start, Shops1Half, Shops1End, Shops2Start, Shops2Half, Shops2End, Shops3Start, Shops3Half, Shops3End,
         Carousel, Noria
     }
 
@@ -230,17 +288,18 @@ public class FeriaBuildings : MonoBehaviour
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
-        Carousel, Noria1, Noria2
+        Carousel, Noria1, Noria2,
     }
 
-    public enum CustomersPositions
+    public enum PeoplePositions
     {
         Entry, Ticket1, Ticket2, Info1, Info2, RestroomMale, RestroomFemale,
         Shop1, Shop2, Shop3, Shop4, Shop5, Shop6, Shop7, Shop8, Shop9, Shop10,
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
-        Carousel, Noria
+        Carousel, Noria,
+        Extra1, Extra2, Extra3, Extra4, Extra5, Extra6, Extra7, Extra8, Extra9, Extra10
     }
 
 }
