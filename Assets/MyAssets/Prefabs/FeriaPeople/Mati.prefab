@@ -147,8 +147,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3688923251853446316}
+  - component: {fileID: 1638925175431807951}
   - component: {fileID: 8969417612559033725}
   - component: {fileID: 5042737185712958328}
+  - component: {fileID: 154013142492906879}
   m_Layer: 0
   m_Name: Mati
   m_TagString: Untagged
@@ -174,6 +176,28 @@ Transform:
   - {fileID: 8989823600119242258}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1638925175431807951
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327912076638267423}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 400
+  m_StoppingDistance: 0.1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!136 &8969417612559033725
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -224,6 +248,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &154013142492906879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7327912076638267423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406ec18003ab6934a98c36e042cafcc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveState: 0
+  target: {fileID: 0}
+  speedWalk: 1.5
+  speedRun: 3
+  followingSara: 0
+  followingSaraIndex: 0
+  diff: 0
 --- !u!1001 &6806533011921387927
 PrefabInstance:
   m_ObjectHideFlags: 0

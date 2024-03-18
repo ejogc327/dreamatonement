@@ -135,6 +135,7 @@ public class GameManager : MonoBehaviour
         {
             case GameStates.MainMenu:
 			    Time.timeScale = 1f; //velocidad de la simulación
+                MusicManager.instance.Play(0);
                 break; 
             case GameStates.Loading:
                 Time.timeScale = 1f;
@@ -152,7 +153,8 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameStates.Gameplay:
-                Time.timeScale = 1f; 
+                Time.timeScale = 1f;
+                MusicManager.instance.Pause();
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -160,7 +162,8 @@ public class GameManager : MonoBehaviour
                 PauseMenuManager.instance.HideAllPanels();
                 break;
             case GameStates.PauseMenu:
-                Time.timeScale = 0f; 
+                Time.timeScale = 0f;
+                MusicManager.instance.Resume();
 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;

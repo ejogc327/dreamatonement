@@ -46,6 +46,12 @@ public class FeriaPeopleBehavior : MonoBehaviour
         TranslatePeopleTo();
     }
 
+    /*void OnCollisionEnter(Collision collision)
+    {
+        destination = Vector3.right;
+        transform.Translate(destination * Time.deltaTime, Space.World);
+    }*/
+
     #endregion
 
     #region 3. Funciones Propias
@@ -82,6 +88,7 @@ public class FeriaPeopleBehavior : MonoBehaviour
                 Debug.Log("Rot1: " + _rotFinal);
                 Debug.Log("Rot2: " + transform.rotation);
                 move = false;
+                SetPeopleAction(PeopleActions.None);
             }
         }
 
@@ -110,12 +117,23 @@ public class FeriaPeopleBehavior : MonoBehaviour
     {
         //if ()
     }
+    bool IsObjectHere(Vector3 _position)
+    {
+        Collider[] _intersecting = Physics.OverlapSphere(_position, 0.01f);
+        if (_intersecting.Length == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
-
-    void SetPeopleAction(PeopleActions _newAction)
+    public void SetPeopleAction(PeopleActions _newAction)
     {
         peopleAction = _newAction;
-
+        TransformData _destinationTransformData;
         //Vector3 _destination;
         switch (peopleAction)
         {
@@ -124,8 +142,10 @@ public class FeriaPeopleBehavior : MonoBehaviour
                 anim.SetBool("walk", false);
                 break;
             case PeopleActions.GoToEntry:
-                //_destination = FeriaBuildings.instance.GetEntryTransformData().position;
-                // agent.SetDestination(_destination);
+                destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Entry].position;
+                Debug.Log("Posición final_ " + destination);
+                agent.SetDestination(destination);
+                
                 break;
             case PeopleActions.GoToTicket:
                 //_destination = FeriaBuildings.instance.GetTicketTransformData().position;

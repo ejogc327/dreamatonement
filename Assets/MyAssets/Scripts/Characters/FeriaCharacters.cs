@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FeriaCharacters : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class FeriaCharacters : MonoBehaviour
         {
             employees[i].position = FeriaBuildings.instance.employeesTransformData[i].position;
             employees[i].rotation = FeriaBuildings.instance.employeesTransformData[i].rotation;
+
         }            
     }
 
@@ -63,6 +65,7 @@ public class FeriaCharacters : MonoBehaviour
         people = new Transform[2];
         for (int i = 0; i < people.Length; i++)
         {
+            //people[i] = Instantiate(peopleOrigin[5], Vector3.zero, Quaternion.identity);
             people[i] = Instantiate(peopleOrigin[UnityEngine.Random.Range(0, peopleOrigin.Length - 1)], Vector3.zero, Quaternion.identity);
             people[i].SetParent(transform.GetChild(1));
         }
@@ -73,9 +76,29 @@ public class FeriaCharacters : MonoBehaviour
         for (int i = 0; i < people.Length; i++)
         {
             int _random = UnityEngine.Random.Range(1, Enum.GetNames(typeof(FeriaPeopleBehavior.PeopleActions)).Length  - 1);
-            people[i].position = FeriaBuildings.instance.peopleTransformData[i].position;
-            people[i].rotation = FeriaBuildings.instance.employeesTransformData[i].rotation;
-            Debug.Log("Trabajador " + i + ": " + people[i].position);
+            people[i].position = FeriaBuildings.instance.peopleTransformData[1].position;
+            people[i].rotation = FeriaBuildings.instance.peopleTransformData[1].rotation;
+            bool _isIntersecting = false;
+            do
+            {
+                Collider[] _intersecting = Physics.OverlapSphere(people[i].position + Vector3.up, 0.01f);
+                if (_intersecting.Length > 0)
+                {
+                    Debug.Log("Hay un objeto encima");
+                    _isIntersecting = true;
+                    people[i].Translate(Vector3.right * Time.deltaTime, Space.World);
+                }
+                else
+                {
+                    Debug.Log("No hay un objeto encima");
+                    _isIntersecting = false;
+                }
+
+            } while (_isIntersecting);
+
+            FeriaPeopleBehavior _script = people[i].GetComponent<FeriaPeopleBehavior>();
+            //if (_script != null) continue;
+            _script.SetPeopleAction(FeriaPeopleBehavior.PeopleActions.GoToEntry);
         }
     }
     #endregion

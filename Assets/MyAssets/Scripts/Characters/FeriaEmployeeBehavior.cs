@@ -26,6 +26,7 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
         //anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
@@ -33,11 +34,13 @@ public class FeriaEmployeeBehavior : MonoBehaviour
     void Start()
     {
         destination = Vector3.zero;
+        agent.enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        agent.isStopped = true;
         UpdateEmployeesActions();
     }
 

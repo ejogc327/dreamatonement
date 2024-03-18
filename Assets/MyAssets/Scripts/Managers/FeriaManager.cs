@@ -32,7 +32,7 @@ public class FeriaManager : MonoBehaviour
 
     private void Start()
     {
-        SetFeriaState(FeriaStates.Intro);
+        SetFeriaState(FeriaStates.Gameplay1);
 
     }
 
@@ -64,6 +64,7 @@ public class FeriaManager : MonoBehaviour
                 vcThirdPersonSara.m_Priority = 0;
                 vcIntro.m_Priority = 2;
                 anim.SetInteger("state", 1);
+                //MatiMovement.
                 //anim.Play("Intro", 0, 0f);
                 break;
             case FeriaStates.Gameplay1:

@@ -104,25 +104,25 @@ public class FeriaBuildings : MonoBehaviour
         _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
         // Shops1: 45 - 47
         _transformData.position = new Vector3(10f, 0f, 13.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(23.5f, 0f, 13.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(37f, 0f, 13.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         // Shops2: 48 - 50
         _transformData.position = new Vector3(10f, 0f, 4f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(23.5f, 0f, 4f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(37f, 0f, 4f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         // Shops3: 51 - 53
         _transformData.position = new Vector3(10f, 0f, -5.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(23.5f, 0f, -5.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
         _transformData.position = new Vector3(37f, 0f, -5.5f);
-        peopleTransformData.Add(_transformData);
+        buildingsTransformData.Add(_transformData);
 
         // Carousel: 54
         _transformData.position = carousel.position;
@@ -149,7 +149,9 @@ public class FeriaBuildings : MonoBehaviour
         employeesTransformData.Add(_transformData);
 
         // Ticket: 2 - 3
-        _transformData.position = ticket.position + new Vector3(-2f, 0f, 1.5f);
+        _transformData.position = ticket.position + new Vector3(-1f, 0f, 1.5f);
+        Debug.Log("Tiquet posición: " + ticket.position);
+        Debug.Log("Employee Tiquet posición: " + _transformData.position);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
         employeesTransformData.Add(_transformData);
         _transformData.position = ticket.position + new Vector3(-1.5f, 0f, 0.8f);
