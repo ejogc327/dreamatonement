@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static FeriaPeopleBehavior;
 
 /// <summary>
 ///
@@ -57,6 +56,8 @@ public class SaraBehavior : MonoBehaviour
         {
             MoveTo();
         }
+
+        
     }
 
     #endregion

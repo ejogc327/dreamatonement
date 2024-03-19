@@ -62,15 +62,16 @@ public class FeriaPeopleBehavior : MonoBehaviour
         {
             play = false;
             move = true;
-            Vector3 _destination = FeriaBuildings.instance.employeesTransformData[peopleActionIndex].position;
+            destination = FeriaBuildings.instance.employeesTransformData[peopleActionIndex].position;
+            //Vector3 _destination = FeriaBuildings.instance.employeesTransformData[peopleActionIndex].position;
 
             agent.isStopped = false;
-            agent.SetDestination(_destination);
+            agent.SetDestination(destination);
 
             anim.SetBool("walk", true);
             //transform.Rotate()
             //Quaternion _rotFinal = Quaternion.LookRotation(dirMove);
-            destination = _destination;
+            //destination = _destination;
         }
 
         diff = (transform.position - destination).magnitude;
@@ -143,7 +144,7 @@ public class FeriaPeopleBehavior : MonoBehaviour
                 break;
             case PeopleActions.GoToEntry:
                 destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Entry].position;
-                Debug.Log("Posición final_ " + destination);
+                //Debug.Log("Posición final_ " + destination);
                 agent.isStopped = false;
                 anim.SetBool("walk", true);
                 agent.SetDestination(destination);

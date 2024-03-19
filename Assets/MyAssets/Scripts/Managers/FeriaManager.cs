@@ -24,6 +24,8 @@ public class FeriaManager : MonoBehaviour
 
     GameObject player;
     SaraMovement saraMovementScript;
+    SaraBehavior saraBehaviorScript;
+    NavMeshAgent saraAgent;
     #endregion
 
     #region Funciones Unity
@@ -36,6 +38,8 @@ public class FeriaManager : MonoBehaviour
         //anim = GameObject GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         saraMovementScript = player.GetComponent<SaraMovement>();
+        saraBehaviorScript = player.GetComponent<SaraBehavior>();
+        saraAgent = player.GetComponent<NavMeshAgent>();
     }
 
     private void Start()
@@ -80,6 +84,7 @@ public class FeriaManager : MonoBehaviour
     public void SetFeriaState(FeriaStates _newState)
     {
         state = _newState;
+        GameObject _trigger;
         switch (state)
         {
             case FeriaStates.Intro:
@@ -89,29 +94,49 @@ public class FeriaManager : MonoBehaviour
                 vcIntro.m_Priority = 2;
                 anim.SetInteger("state", 1);
 
-                saraMovementScript.enabled = false;
-
                 MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.FollowSara);
+
+                saraMovementScript.enabled = false;
+                saraBehaviorScript.enabled = true;
                 break;
             case FeriaStates.Gameplay1:
                 isKinematics = false;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
-                transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
-                saraMovementScript.enabled = true;
-
+                _trigger = transform.GetChild(1).GetChild(0).gameObject;
+                _trigger.SetActive(true);
 
                 MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.FollowSara);
+
+                saraMovementScript.enabled = true;
+                saraBehaviorScript.enabled = false;
+                saraAgent.enabled = false;
                 break;
             case FeriaStates.KinematicsMap:
                 isKinematics = true;
                 vcThirdPersonSara.m_Priority = 0;
                 vcKinematicsMap.m_Priority = 2;
-                transform.GetChild(1).GetChild(0).gameObject.SetActive(false);
+                anim.SetInteger("state", 3);
+
+                _trigger = transform.GetChild(1).GetChild(0).gameObject;
+                _trigger.SetActive(false);
+
+                SaraAnimatorIk.instance.SetTargetPositionMap();
 
                 saraMovementScript.enabled = false;
-                //SaraBehavior.instance
+                saraBehaviorScript.enabled = true;
+                saraAgent.enabled = true;
+                break;
+            case FeriaStates.Gameplay2:
+                isKinematics = false;
+                vcKinematicsMap.m_Priority = 0;
+                vcThirdPersonSara.m_Priority = 2;
+                //transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+
+                saraMovementScript.enabled = true;
+                saraBehaviorScript.enabled = false;
+                saraAgent.enabled = false;
                 break;
         }
     }
@@ -127,14 +152,15 @@ public class FeriaManager : MonoBehaviour
     {
         //SetFeriaState()
         //anim.enabled
-        //MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.None);
+        MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.GoToCarousel);
+        SaraAnimatorIk.instance.SetTargetPositionMati();
     }
 
     public void Map_End()
     {
-        SetFeriaState(FeriaStates.Gameplay1);
+        SetFeriaState(FeriaStates.Gameplay2);
         anim.enabled = false;
-        anim.SetInteger("state", 2);
+        anim.SetInteger("state", 4);
     }
 
     #endregion

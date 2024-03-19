@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-using static SaraBehavior;
 
 public class MatiBehavior : MonoBehaviour
 {
@@ -66,17 +65,16 @@ public class MatiBehavior : MonoBehaviour
         //}
         if (followingSara)
         {
-            FollowingToSara(0);
+            FollowingToSara(3);
         }
     }
     #endregion
 
     #region Funciones Propias
 
-    void AssignTargetSara()
+    public Vector3 GetPosition()
     {
-        target = GameObject.FindWithTag("Player").transform;
-        followingSara = true;
+        return transform.position;
     }
 
     /// <summary>
@@ -139,12 +137,22 @@ public class MatiBehavior : MonoBehaviour
                 anim.SetInteger("move", 0);
                 break;
             case MatiActions.FollowSara:
-                AssignTargetSara();
+                target = GameObject.FindWithTag("Player").transform;
+                followingSara = true;
                 //destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Map].position;
                 //Debug.Log("Posición final_ " + destination);
                 //agent.isStopped = false;
                 //anim.SetInteger("move", 1);
                 //agent.SetDestination(destination);
+                break;
+            case MatiActions.GoToCarousel:
+                target = null;
+                followingSara = false;
+                destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Carousel].position;
+                agent.isStopped = false;
+                anim.SetInteger("move", 2);
+                agent.speed = speedRun;
+                agent.SetDestination(destination);
                 break;
         }
     }
@@ -180,6 +188,7 @@ public class MatiBehavior : MonoBehaviour
     {
         None,
         FollowSara,
+        GoToCarousel
 
     }
 }

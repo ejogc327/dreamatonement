@@ -306,7 +306,7 @@ public class FeriaBuildings : MonoBehaviour
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
         Shops1Start, Shops1Half, Shops1End, Shops2Start, Shops2Half, Shops2End, Shops3Start, Shops3Half, Shops3End,
-        Carousel, Noria
+        Carousel, Noria, Map, TicketGames
     }
 
     public enum EmployeesPositions
