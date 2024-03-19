@@ -74,7 +74,8 @@ public class FeriaPeopleBehavior : MonoBehaviour
         }
 
         diff = (transform.position - destination).magnitude;
-        if (move && diff <= 0.5f)
+        if (diff <= 0.5f)
+            //if (move && diff <= 0.5f)
         {
             agent.isStopped = true;
             anim.SetBool("walk", false);
@@ -144,6 +145,8 @@ public class FeriaPeopleBehavior : MonoBehaviour
             case PeopleActions.GoToEntry:
                 destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Entry].position;
                 Debug.Log("Posición final_ " + destination);
+                agent.isStopped = false;
+                anim.SetBool("walk", true);
                 agent.SetDestination(destination);
                 
                 break;

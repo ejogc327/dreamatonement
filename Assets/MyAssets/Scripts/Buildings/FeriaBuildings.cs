@@ -149,7 +149,7 @@ public class FeriaBuildings : MonoBehaviour
         employeesTransformData.Add(_transformData);
 
         // Ticket: 2 - 3
-        _transformData.position = ticket.position + new Vector3(-1f, 0f, 1.5f);
+        _transformData.position = ticket.position + new Vector3(-2f, 0f, 1.5f);
         Debug.Log("Tiquet posición: " + ticket.position);
         Debug.Log("Employee Tiquet posición: " + _transformData.position);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);

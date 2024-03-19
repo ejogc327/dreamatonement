@@ -10,6 +10,7 @@ using UnityEngine;
 public class NoriaRotation : MonoBehaviour
 {
     #region 1. Variables
+    public static NoriaRotation instance;
     Transform rotationObject;
     public float speedRot;
     #endregion
@@ -17,6 +18,7 @@ public class NoriaRotation : MonoBehaviour
     #region 2. Funciones Unity
     private void Awake()
     {
+        instance = this;
         rotationObject = transform.GetChild(1).transform;
         //speedRot = 400f;
     }
@@ -24,11 +26,6 @@ public class NoriaRotation : MonoBehaviour
     private void Update()
     {
         Rotation();
-    }
-
-    void OnMouseDown()
-    {
-        gameObject.SetActive(false);
     }
     #endregion
 
@@ -49,5 +46,6 @@ public class NoriaRotation : MonoBehaviour
     }
     #endregion
 
-    
+    public enum NoriaStates { Stopped, Starting, Playing, Stopping }
+
 }

@@ -310,6 +310,10 @@ PrefabInstance:
       value: X Bot
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: e4de21f19748fb440929c2a6649f7da3, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 08460e0973221794e8e6a93f63947f69, type: 2}
+    - target: {fileID: 5866666021909216657, guid: e4de21f19748fb440929c2a6649f7da3, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}

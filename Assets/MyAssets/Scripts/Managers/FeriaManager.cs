@@ -33,7 +33,7 @@ public class FeriaManager : MonoBehaviour
     private void Start()
     {
         SetFeriaState(FeriaStates.Gameplay1);
-
+        NoriaRotation.instance.speedRot = 5f;
     }
 
     private void Update()
