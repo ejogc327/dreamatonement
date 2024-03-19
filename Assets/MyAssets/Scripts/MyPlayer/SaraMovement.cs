@@ -51,7 +51,6 @@ public class SaraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FeriaManager.instance.IsKinematics()) return;
         SetVirtualAxis();
         SetMoveDirection();
         UpdateMoveState();

@@ -17,6 +17,8 @@ public class FeriaBuildings : MonoBehaviour
     Transform[] shops = new Transform[40];
     Transform carousel;
     Transform noria;
+    Transform map;
+    Transform ticketGames;
 
     public List<TransformData> buildingsTransformData = new List<TransformData>();
     public List<TransformData> employeesTransformData = new List<TransformData>();
@@ -52,6 +54,9 @@ public class FeriaBuildings : MonoBehaviour
         restroomFemale = transform.GetChild(3).transform;
         carousel = transform.GetChild(15).transform;
         noria = transform.GetChild(16).transform;
+
+        map = transform.GetChild(17).transform;
+        ticketGames = transform.GetChild(18).transform;
 
         for (int i = 0; i < 10; i++)
         {
@@ -134,6 +139,15 @@ public class FeriaBuildings : MonoBehaviour
         _transformData.rotation = Quaternion.identity;
         buildingsTransformData.Add(_transformData);
 
+        // Map: 56
+        _transformData.position = map.position;
+        _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
+        buildingsTransformData.Add(_transformData);
+
+        // Ticket games: 57
+        _transformData.position = ticketGames.position + new Vector3(-1.5f, 0f, 1.5f);
+        _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
+        buildingsTransformData.Add(_transformData);
     }
 
     void SetEmployeesTransformData()
@@ -175,11 +189,15 @@ public class FeriaBuildings : MonoBehaviour
         {
             int _v = i / 8;
             int _w = (int)Math.Pow(-1, _v);
-            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -1.5f * _w);
+            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -2f * _w);
             _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * _w, 0f);
             employeesTransformData.Add(_transformData);
         }
 
+        // TicketGames: 47
+        _transformData.position = ticketGames.position + new Vector3(-2f, 0f, 1.5f);
+        _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
+        employeesTransformData.Add(_transformData);
 
     }
 
@@ -227,12 +245,20 @@ public class FeriaBuildings : MonoBehaviour
             peopleTransformData.Add(_transformData);
         }
 
-        // Carrusel: 47
+        // Map: 47
+        _transformData.position = map.position + new Vector3(-2f, 0f, 0f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // TicketGames: 48
+        _transformData.position = ticketGames.position + new Vector3(-3.5f, 0f, 1.5f);
+        _transformData.rotation = Quaternion.Euler(0f, 90f, 0f);
+        peopleTransformData.Add(_transformData);
+        // Carrusel: 49
         _transformData.position = carousel.position + new Vector3(1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
         peopleTransformData.Add(_transformData);
 
-        // Noria: 48
+        // Noria: 50
         _transformData.position = noria.position + new Vector3(-1f, 0f, 2f);
         _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
         peopleTransformData.Add(_transformData);
@@ -290,6 +316,7 @@ public class FeriaBuildings : MonoBehaviour
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
+        TicketGames,
         Carousel, Noria1, Noria2,
     }
 
@@ -300,7 +327,7 @@ public class FeriaBuildings : MonoBehaviour
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
-        Carousel, Noria,
+        Map, TicketGames, Carousel, Noria,
         Extra1, Extra2, Extra3, Extra4, Extra5, Extra6, Extra7, Extra8, Extra9, Extra10
     }
 

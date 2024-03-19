@@ -37,7 +37,7 @@ public class FeriaCharacters : MonoBehaviour
     #region 3. Funciones Propias
     void CreateEmployees()
     {
-        employees = new Transform[47];
+        employees = new Transform[48];
         //Debug.Log("Employees Length: " + employees.Length);
         //Debug.Log("Employees Origin Length: " + employeesOrigin.Length);
 

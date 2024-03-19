@@ -134,8 +134,7 @@ public class FeriaPeopleBehavior : MonoBehaviour
     public void SetPeopleAction(PeopleActions _newAction)
     {
         peopleAction = _newAction;
-        TransformData _destinationTransformData;
-        //Vector3 _destination;
+
         switch (peopleAction)
         {
             case PeopleActions.None:
