@@ -403,6 +403,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBackground: {fileID: 3926468520147549458}
   dialogueText: {fileID: 4123181380579996700}
+  startTime: 1
+  delayStartTime: 1
+  endTime: 1
+  lineTime: 0.3
+  letterTime: 0.1
 --- !u!1 &6976072291119534823
 GameObject:
   m_ObjectHideFlags: 0

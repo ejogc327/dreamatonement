@@ -19,29 +19,8 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 88834523136
-    m_Localized: 'Mati:
-
-      Voy al Corrusel.
-
-
-      Sara:
-
-      NO.
-
-      ESPERA!!!
-
-
-      (...)
-
-      (...)
-
-      (...)
-
-      (...)
-
-      (...)
-
-      (...)'
+    m_Localized: "Mati:\nVoy al Corrusel.\n\nSara:\nNO.\nESP\xC9RAME!!!\n\n(...)\n\n(Tengo
+      que encontrarlo.)"
     m_Metadata:
       m_Items: []
   references:

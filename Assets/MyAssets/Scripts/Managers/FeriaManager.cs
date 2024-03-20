@@ -107,9 +107,6 @@ public class FeriaManager : MonoBehaviour
                 saraBehaviorScript.enabled = true;
                 break;
             case FeriaStates.Gameplay1:
-                dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
-                HudManager.instance.UpdateDialogue(2f, 2f, 2f, 0.075f, dialogue);
-
                 isKinematics = false;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
@@ -158,14 +155,22 @@ public class FeriaManager : MonoBehaviour
         anim.SetInteger("state", 2);
     }
 
+    public void StartDialogue1_Event()
+    {
+        dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
+        HudManager.instance.UpdateDialogue(dialogue);
+    }
+
     public void MatiGoCarousel_Event()
     {
         //SetFeriaState()
         //anim.enabled
         MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.GoToCarousel);
         SaraAnimatorIk.instance.SetTargetPositionMati();
-        
 
+
+        //dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
+        //HudManager.instance.UpdateDialogue(dialogue);
     }
 
     public void Map_End()

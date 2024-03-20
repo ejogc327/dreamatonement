@@ -18,6 +18,12 @@ public class HudManager : MonoBehaviour
     Image lifeBar;
     public Image dialogueBackground;
     public TextMeshProUGUI dialogueText;
+
+    public float startTime;
+    public float delayStartTime;
+    public float endTime;
+    public float lineTime;
+    public float letterTime;
     #endregion
 
     #region Funciones Unity
@@ -36,21 +42,21 @@ public class HudManager : MonoBehaviour
         lifeBar.fillAmount = _lifeNormalized;
     }
 
-    public void UpdateDialogue(float _startTime, float _delayStartTime, float _endTime, float _letterTime, string _text)
+    public void UpdateDialogue(string _text)
     {
-        StartCoroutine(UpdateDialogueCoroutine(_startTime, _delayStartTime, _endTime, _letterTime, _text));
+        StartCoroutine(UpdateDialogueCoroutine(_text));
     }
 
-    IEnumerator UpdateDialogueCoroutine(float _startTime, float _delayStartTime, float _endTime, float _letterTime, string _text)
+    IEnumerator UpdateDialogueCoroutine(string _text)
     {
         string[] _lines = _text.Replace("\r", "").Split('\n');
 
         //    return lines.Length >= lineNo ? lines[lineNo - 1] : null;
 
-        int _letter = 0;
-        yield return new WaitForSeconds(_startTime);
+        //int _letter = 0;
+        yield return new WaitForSeconds(startTime);
         dialogueBackground.gameObject.SetActive(true);
-        yield return new WaitForSeconds(_delayStartTime);
+        yield return new WaitForSeconds(delayStartTime);
 
         for (int i = 0; i < _lines.Length; i++)
         {
@@ -62,10 +68,10 @@ public class HudManager : MonoBehaviour
             for (int j = 0; j < _lines[i].Length; j++)
             {
                 dialogueText.text += _lines[i][j];
-                yield return new WaitForSeconds(_letterTime);
+                yield return new WaitForSeconds(letterTime);
             }
             dialogueText.text += "\r\n";
-
+            yield return new WaitForSeconds(lineTime);
         }
 
         //while (_letter < _text.Length)
@@ -75,7 +81,7 @@ public class HudManager : MonoBehaviour
         //    yield return new WaitForSeconds(_letterTime);
         //}
 
-        yield return new WaitForSeconds(_endTime);
+        yield return new WaitForSeconds(endTime);
 
         dialogueBackground.gameObject.SetActive(false);
 
