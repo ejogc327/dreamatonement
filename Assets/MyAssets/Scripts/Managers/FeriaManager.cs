@@ -2,8 +2,13 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.Localization;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Localization.Tables;
 
 public class FeriaManager : MonoBehaviour
 {
@@ -21,6 +26,8 @@ public class FeriaManager : MonoBehaviour
     public bool isKinematics;
 
     public bool isPlayerInside;
+
+    string dialogue;
 
     GameObject player;
     SaraMovement saraMovementScript;
@@ -100,6 +107,9 @@ public class FeriaManager : MonoBehaviour
                 saraBehaviorScript.enabled = true;
                 break;
             case FeriaStates.Gameplay1:
+                dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
+                HudManager.instance.UpdateDialogue(2f, 2f, 2f, 0.075f, dialogue);
+
                 isKinematics = false;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
@@ -154,6 +164,8 @@ public class FeriaManager : MonoBehaviour
         //anim.enabled
         MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.GoToCarousel);
         SaraAnimatorIk.instance.SetTargetPositionMati();
+        
+
     }
 
     public void Map_End()
