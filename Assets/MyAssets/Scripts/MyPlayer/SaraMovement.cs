@@ -86,7 +86,18 @@ public class SaraMovement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("People"))
         {
-            anim.SetInteger("someoneNext", 1);
+            var _direction = transform.InverseTransformPoint(other.transform.position); //this helps us find which direction the object collided from
+
+            if (_direction.x > 0f)
+            { //Change the axis to fit your needs
+                anim.SetInteger("someoneNext", 1);
+                print("The object collided with the right side of the ball!");
+            }
+            else if (_direction.x < 0f)
+            {
+                anim.SetInteger("someoneNext", 2);
+                print("The object collided with the left side of the ball!");
+            }
         }
     }
 
@@ -210,6 +221,11 @@ public class SaraMovement : MonoBehaviour
         {
             //anim.SetTrigger("kick");
             SetHitState(HitStates.Kicking);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K) && hitState == HitStates.None)
+        {
+            SetHitState(HitStates.Stomping);
         }
     }
 
@@ -342,7 +358,9 @@ public class SaraMovement : MonoBehaviour
                 //speedMove = 0;
                 SetMoveState(MoveStates.Idle);
                 break;
-            case HitStates.Stamping:
+            case HitStates.Stomping:
+                anim.SetTrigger("stomp");
+                SetMoveState(MoveStates.Idle);
                 break;
         }
     }
@@ -356,5 +374,5 @@ public class SaraMovement : MonoBehaviour
 
     public enum TorchStates { None, GrabbingTorch, HasTorch }
 
-    public enum HitStates { None, Punching, Kicking, Stamping }
+    public enum HitStates { None, Punching, Kicking, Stomping }
 }
