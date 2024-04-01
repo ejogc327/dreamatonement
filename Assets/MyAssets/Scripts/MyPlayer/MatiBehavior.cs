@@ -18,10 +18,8 @@ public class MatiBehavior : MonoBehaviour
     public int followingSaraIndex;
 
     float counter;
+    public TransformData destination;
     public float diff;
-
-    public Vector3 destination;
-    public Quaternion rotDestination;
 
     Transform target;
     NavMeshAgent agent;
@@ -63,10 +61,27 @@ public class MatiBehavior : MonoBehaviour
         //    followingSaraIndex = 3;
         //    followingSara = true;
         //}
-        if (followingSara)
+        if (matiAction == MatiActions.FollowSara)
         {
             FollowingToSara(3);
         }
+        else if (matiAction == MatiActions.GoToCarousel)
+        {
+            diff = (destination.position - transform.position).magnitude;
+
+            if (diff < 0.5f)
+            {
+                SetMatiAction(MatiActions.InCarousel);
+                int _emptyHorse = CarouselBehavior.instance.FindEmptyHorse();
+                if (_emptyHorse != -1)
+                {
+                    CarouselBehavior.instance.SetKidOnCarousel(transform, _emptyHorse);
+                    CarouselBehavior.instance.StartCarousel();
+                }
+            }
+        }
+
+
     }
     #endregion
 
@@ -138,6 +153,7 @@ public class MatiBehavior : MonoBehaviour
                 break;
             case MatiActions.FollowSara:
                 target = GameObject.FindWithTag("Player").transform;
+                agent.enabled = true;
                 followingSara = true;
                 //destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Map].position;
                 //Debug.Log("Posición final_ " + destination);
@@ -147,12 +163,16 @@ public class MatiBehavior : MonoBehaviour
                 break;
             case MatiActions.GoToCarousel:
                 target = null;
+                agent.enabled = true;
                 followingSara = false;
-                destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Carousel].position;
-                agent.isStopped = false;
-                anim.SetInteger("move", 2);
-                agent.speed = speedRun;
-                agent.SetDestination(destination);
+                destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Carousel];
+                agent.SetDestination(destination.position);
+                SetMoveState(MoveStates.Running);
+                break;
+            case MatiActions.InCarousel:
+                agent.isStopped = true;
+                SetMoveState(MoveStates.Idle);
+                agent.enabled = false;
                 break;
         }
     }
@@ -172,11 +192,13 @@ public class MatiBehavior : MonoBehaviour
                 agent.isStopped = false;
                 speedMove = speedWalk;
                 anim.SetInteger("move", 1);
+                agent.speed = speedMove;
                 break;
             case MoveStates.Running:
                 agent.isStopped = false;
                 speedMove = speedRun;
                 anim.SetInteger("move", 2);
+                agent.speed = speedMove;
                 break;
         }
     }
@@ -188,7 +210,8 @@ public class MatiBehavior : MonoBehaviour
     {
         None,
         FollowSara,
-        GoToCarousel
+        GoToCarousel,
+        InCarousel,
 
     }
 }

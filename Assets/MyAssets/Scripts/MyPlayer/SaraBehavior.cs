@@ -67,7 +67,7 @@ public class SaraBehavior : MonoBehaviour
 
     void MoveTo()
     {
-        Debug.Log("Está moviendo");
+        //Debug.Log("Está moviendo");
 
         diff = (transform.position - destination).magnitude;
         if (diff <= 0.5f)
@@ -81,19 +81,25 @@ public class SaraBehavior : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotDestination, 400 * Time.deltaTime);
             if (transform.rotation == rotDestination)
             {
-                Debug.Log("Rot1: " + rotDestination);
-                Debug.Log("Rot2: " + transform.rotation);
+                //Debug.Log("Rot1: " + rotDestination);
+                //Debug.Log("Rot2: " + transform.rotation);
                 //move = false;
                 SetSaraAction(SaraActions.None);
             }
         }
     }
 
+    //void Posi
+
     void UpdateSaraAction()
     {
         if (FeriaManager.instance.state == FeriaManager.FeriaStates.KinematicsMap && saraAction != SaraActions.GoToMap)
         {
             SetSaraAction(SaraActions.GoToMap);
+        }
+        if (FeriaManager.instance.state == FeriaManager.FeriaStates.KinematicsTransition && saraAction != SaraActions.Transition)
+        {
+            SetSaraAction(SaraActions.Transition);
         }
     }
 
@@ -104,15 +110,21 @@ public class SaraBehavior : MonoBehaviour
         switch (saraAction)
         {
             case SaraActions.None:
-                agent.isStopped = true;
+                //agent.isStopped = true;
                 anim.SetInteger("move", 0);
+                //agent.enabled = false;
                 break;
             case SaraActions.GoToMap:
                 destination = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Map].position;
-                Debug.Log("Posición final_ " + destination);
+
                 agent.isStopped = false;
                 anim.SetInteger("move", 1);
                 agent.SetDestination(destination);
+                break;
+            case SaraActions.Transition:
+                //if (agen)
+                //agent.isStopped = true;
+                anim.SetInteger("move", 0);
                 break;
         }
     }
@@ -122,6 +134,7 @@ public class SaraBehavior : MonoBehaviour
     {
         None,
         GoToMap,
+        Transition,
         
     }
 }

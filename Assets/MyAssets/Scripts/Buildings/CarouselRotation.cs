@@ -17,6 +17,7 @@ public class CarouselRotation : MonoBehaviour
     public float timeStarting;
     public float changeSpeed;
     public bool play;
+    public bool stop;
 
     public float counter;
 
@@ -32,18 +33,41 @@ public class CarouselRotation : MonoBehaviour
         //speedRot = 400f;
     }
 
+    private void Start()
+    {
+        //speedRot = 20f;
+        changeSpeed = 3f;
+        timeStarting = 5f;
+    }
+
     private void Update()
     {
-        if (state == CarouselStates.Stopped && play)
+        if (play)
         {
             play = false;
-            SetCarouselState(CarouselStates.Starting);
+            if (state == CarouselStates.Stopped)
+            {
+                SetCarouselState(CarouselStates.Starting);
+            }
         }
+        
         if (state == CarouselStates.Starting)
             StartRotation();
-        else if (state == CarouselStates.Playing)
-            RegularRotation();
-        else if (state == CarouselStates.Stopping)
+      //  else if (state == CarouselStates.Playing)
+        //    RegularRotation();
+        //else if (state == CarouselStates.Stopping)
+        //    EndRotation();
+
+        if (stop)
+        {
+            stop = false;
+            if (state == CarouselStates.Playing)
+            {
+                SetCarouselState(CarouselStates.Stopping);
+            }
+        }
+
+        if (state == CarouselStates.Stopping)
             EndRotation();
 
         rotationObject.Rotate(Vector3.down * speedRot * Time.deltaTime);
@@ -52,6 +76,10 @@ public class CarouselRotation : MonoBehaviour
     #endregion
 
     #region 3. Funciones Propias
+    //public void SetRotationSpeed()
+    //{
+
+    //}
 
     void StartRotation()
     {

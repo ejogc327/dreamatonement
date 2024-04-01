@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Localization;
+//using UnityEditor.Localization;
 using UnityEngine;
-using UnityEngine.Localization.Tables;
-using UnityEngine.UI;
+//using UnityEngine.Localization.Tables;
 
 /// <summary>
 ///
@@ -27,13 +24,15 @@ public class LocalizationManager : MonoBehaviour
 
     #region Funciones Propias
 
-    public string GetFeriaDialogueText(string locate, string key)
+
+
+    /*public string GetFeriaDialogueText(string locate, string key)
     {
         var collection = LocalizationEditorSettings.GetStringTableCollection("FeriaDialogues");
         var spanishTable = (StringTable)collection.GetTable(locate);
         var entry = spanishTable.GetEntry(key);
         if (entry != null) return entry.Value;
         return "";
-    }
+    }*/
     #endregion
 }

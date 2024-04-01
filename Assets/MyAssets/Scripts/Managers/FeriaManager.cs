@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Localization;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Localization.Tables;
 
 public class FeriaManager : MonoBehaviour
 {
@@ -28,9 +26,9 @@ public class FeriaManager : MonoBehaviour
 
     public CinemachinePostProcessing postProcessing;
 
-    public bool isKinematics;
+    //public bool isKinematics;
 
-    public bool isPlayerInside;
+    //public bool isPlayerInside;
 
     string dialogue;
 
@@ -59,22 +57,44 @@ public class FeriaManager : MonoBehaviour
     private void Start()
     {
         SetFeriaState(FeriaStates.Gameplay1);
+
+        FeriaCharacters.instance.CreateFeriaPeople();
+        FeriaCharacters.instance.StartPositionSara();
+        FeriaCharacters.instance.StartPositionMati();
+
+
+        //MatiBehavior.instance.transform.position = new Vector3(50f, 0f, 0f);
+        //MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.GoToCarousel);
         NoriaRotation.instance.speedRot = 5f;
     }
 
     private void Update()
     {
-
+        //if 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (state == FeriaStates.Gameplay1 && other.gameObject.CompareTag("Player"))
-        {
-            isPlayerInside = true;
-            SetFeriaState(FeriaStates.KinematicsTransition);
-        }
+
+        //if (state == FeriaStates.Gameplay1 && other.gameObject.CompareTag("Player"))
+        //{
+        //    SetFeriaState(FeriaStates.KinematicsTransition);
+        //}
+
+
+    //    if (state == FeriaStates.Gameplay1 && other.gameObject.CompareTag("Player"))
+    //    {
+    //        //isPlayerInside = true;
+    //        SetFeriaState(FeriaStates.KinematicsMap);
+    //    }
+    //    if (state == FeriaStates.Gameplay2 && other.gameObject.CompareTag("Player"))
+    //    {
+    //        //isPlayerInside = true;
+    //        SetFeriaState(FeriaStates.KinematicsTransition);
+    //    }
     }
+
+
     //void OnTriggerExit(Collider other)
     //{
     //    if (other.gameObject.CompareTag("Player"))
@@ -97,7 +117,6 @@ public class FeriaManager : MonoBehaviour
         switch (state)
         {
             case FeriaStates.Intro:
-                //isKinematics = true;
                 vc0.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 0;
                 vcIntro.m_Priority = 2;
@@ -107,26 +126,30 @@ public class FeriaManager : MonoBehaviour
 
                 saraMovementScript.enabled = false;
                 saraBehaviorScript.enabled = true;
+                saraAgent.enabled = false;
                 break;
             case FeriaStates.Gameplay1:
-                //isKinematics = false;
                 vcIntro.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
+                //anim.enabled = false;
+                anim.SetInteger("state", 2);
+                saraAgent.enabled = false;
 
                 _trigger = transform.GetChild(1).GetChild(0).gameObject;
                 _trigger.SetActive(true);
 
-                MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.FollowSara);
+                //MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.FollowSara);
 
                 saraMovementScript.enabled = true;
                 saraBehaviorScript.enabled = false;
-                saraAgent.enabled = false;
+
+
                 break;
             case FeriaStates.KinematicsMap:
-                //isKinematics = true;
                 vcThirdPersonSara.m_Priority = 0;
                 vcKinematicsMap.m_Priority = 2;
-                anim.SetInteger("state", 2);
+                anim.SetInteger("state", 3);
+                saraAgent.enabled = true;
 
                 _trigger = transform.GetChild(1).GetChild(0).gameObject;
                 _trigger.SetActive(false);
@@ -135,38 +158,41 @@ public class FeriaManager : MonoBehaviour
 
                 saraMovementScript.enabled = false;
                 saraBehaviorScript.enabled = true;
-                saraAgent.enabled = true;
                 break;
             case FeriaStates.Gameplay2:
-                //isKinematics = false;
                 vcKinematicsMap.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
+                //anim.enabled = false;
+                anim.SetInteger("state", 4);
+                saraAgent.enabled = false;
                 //transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
                 saraMovementScript.enabled = true;
                 saraBehaviorScript.enabled = false;
-                saraAgent.enabled = false;
                 break;
             case FeriaStates.KinematicsTransition:
-                //isKinematics = true;
                 vcThirdPersonSara.m_Priority = 0;
                 vcKinematicsTransition.m_Priority = 2;
-                anim.SetInteger("state", 3);
+                anim.SetInteger("state", 5);
+                saraAgent.enabled = false;
 
                 saraMovementScript.enabled = false;
                 saraBehaviorScript.enabled = true;
-                saraAgent.enabled = true;
                 break;
             case FeriaStates.Gameplay3:
-                //isKinematics = false;
                 vcKinematicsTransition.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
+                //anim.enabled = false;
+                anim.SetInteger("state", 6);
+                saraAgent.enabled = false;
                 postProcessing.enabled = true;
                 //transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
                 saraMovementScript.enabled = true;
                 saraBehaviorScript.enabled = false;
-                saraAgent.enabled = false;
+
+                RenderSettings.fog = true;
+                //FeriaEnemies.instance.CreateHumanoids();
                 break;
         }
     }
@@ -174,40 +200,31 @@ public class FeriaManager : MonoBehaviour
     public void Intro_End()
     {
         SetFeriaState(FeriaStates.Gameplay1);
-        anim.enabled = false;
-        anim.SetInteger("state", 0);
     }
 
     public void StartDialogue1_Event()
     {
-        dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
+        //dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
+
+        dialogue = "Mati:\r\nVoy al Corrusel.\r\n\r\nSara:\r\nNO.\r\nESPÉRAME!!!\r\n\r\n(...)\r\n\r\n(Tengo que encontrarlo.)";
         HudManager.instance.UpdateDialogue(dialogue);
     }
 
     public void MatiGoCarousel_Event()
     {
-        //SetFeriaState()
-        //anim.enabled
         MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.GoToCarousel);
         SaraAnimatorIk.instance.SetTargetPositionMati();
 
-
-        //dialogue = LocalizationManager.instance.GetFeriaDialogueText("es", "Dialogue1_1");
-        //HudManager.instance.UpdateDialogue(dialogue);
     }
 
     public void Map_End()
     {
         SetFeriaState(FeriaStates.Gameplay2);
-        anim.enabled = false;
-        anim.SetInteger("state", 0);
     }
 
     public void Transition_End()
     {
         SetFeriaState(FeriaStates.Gameplay3);
-        anim.enabled = false;
-        anim.SetInteger("state", 0);
     }
 
     #endregion

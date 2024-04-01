@@ -7,6 +7,11 @@ TagManager:
   - CarouselParent
   - CharactersParent
   - Mati
+  - EnemyParent
+  - ObjectsParent
+  - CollectibleTargets
+  - Torch
+  - People
   layers:
   - Default
   - TransparentFX

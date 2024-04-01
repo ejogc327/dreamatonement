@@ -156,7 +156,10 @@ GameObject:
   - component: {fileID: 4141246129652383187}
   - component: {fileID: 8279103927625777135}
   - component: {fileID: 2621981680741457288}
+  - component: {fileID: 2931901133359839976}
+  - component: {fileID: 6835875979055293849}
   - component: {fileID: 4096503987026880479}
+  - component: {fileID: 6567045762043700691}
   m_Layer: 0
   m_Name: Sara
   m_TagString: Player
@@ -233,6 +236,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!136 &2931901133359839976
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361715200414309184}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!195 &6835875979055293849
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361715200414309184}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.25
+  m_Speed: 2
+  m_Acceleration: 1
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.5
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &4096503987026880479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,12 +295,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveState: 0
   jumpState: 0
+  grabState: 0
+  torchState: 0
+  hitState: 0
   speedRot: 600
   speedWalk: 2
   speedRun: 4
   forceJump: 0
   maxHeight: 0
   rayToBottomLength: 0
+  isOnTorch: 0
+  hasTorch: 0
+--- !u!114 &6567045762043700691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361715200414309184}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6148f90673a359e4a8abace9b60e0511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saraAction: 0
+  speedRot: 0
+  speedWalk: 0
+  speedRun: 0
+  forceJump: 0
+  maxHeight: 0
+  rayToBottomLength: 0
+  destination: {x: 0, y: 0, z: 0}
+  rotDestination: {x: 0, y: 0, z: 0, w: 0}
+  diff: 0
 --- !u!1001 &2640245715067211904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -320,6 +395,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e4de21f19748fb440929c2a6649f7da3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1519414678993652186}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e4de21f19748fb440929c2a6649f7da3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4531197114936397851}
   m_SourcePrefab: {fileID: 100100000, guid: e4de21f19748fb440929c2a6649f7da3, type: 3}
 --- !u!4 &2535157155391698795 stripped
 Transform:
@@ -352,3 +430,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4531197114936397851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2910839029678812625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3628d0b04aa9af4195c9d1cc7ab9a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

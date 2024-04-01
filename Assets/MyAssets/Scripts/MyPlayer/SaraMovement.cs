@@ -12,6 +12,10 @@ public class SaraMovement : MonoBehaviour
     public static SaraMovement instance;
     public MoveStates moveState;
     public JumpStates jumpState;
+    public GrabStates grabState;
+    public TorchStates torchState;
+    public HitStates hitState;
+
     Vector2 axis;
     Vector3 dirMove;
     float speedMove;
@@ -22,6 +26,11 @@ public class SaraMovement : MonoBehaviour
     public float forceJump;
     public float maxHeight;
     public float rayToBottomLength;
+
+    public bool isOnTorch;
+    public bool hasTorch;
+
+    Transform torch;
 
     Transform cam;
     Rigidbody rb;
@@ -44,8 +53,6 @@ public class SaraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -56,6 +63,9 @@ public class SaraMovement : MonoBehaviour
         UpdateMoveState();
         SoftedRotation();
         Jump();
+        Grab();
+
+        UpdateHit();
         //Run();
     }
 
@@ -64,6 +74,33 @@ public class SaraMovement : MonoBehaviour
         rb.MovePosition(rb.position + dirMove * speedMove * Time.fixedDeltaTime);
         //rb.velocity = 
         RaycastToBottom();
+        RaycastToLeft();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Torch"))
+        {
+            isOnTorch = true;
+            torch = other.transform;
+        }
+        if (other.gameObject.CompareTag("People"))
+        {
+            anim.SetInteger("someoneNext", 1);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Torch"))
+        {
+            isOnTorch = false;
+            torch = null;
+        }
+        if (other.gameObject.CompareTag("People"))
+        {
+            anim.SetInteger("someoneNext", 0);
+        }
     }
 
     #endregion
@@ -91,12 +128,12 @@ public class SaraMovement : MonoBehaviour
         
         if (Input.GetKey(KeyCode.LeftShift))            
         {
-            if (axis.magnitude != 0f && moveState != MoveStates.Running)
+            if (axis.magnitude != 0f && grabState == GrabStates.None && hitState == HitStates.None && moveState != MoveStates.Running)
                 SetMoveState(MoveStates.Running);
         }
         else
         {
-            if (axis.magnitude != 0f && moveState != MoveStates.Walking)
+            if (axis.magnitude != 0f && grabState == GrabStates.None && hitState == HitStates.None && moveState != MoveStates.Walking)
                 SetMoveState(MoveStates.Walking);
         }
         
@@ -134,6 +171,48 @@ public class SaraMovement : MonoBehaviour
             SetJumpState(JumpStates.Jumping);
         }
     }
+
+    void Grab()
+    {
+        if (Input.GetKeyDown(KeyCode.C) && jumpState == JumpStates.Grounded && moveState == MoveStates.Idle && grabState != GrabStates.Grabbing)
+        {
+            SetGrabState(GrabStates.Grabbing);
+            if (isOnTorch && torchState == TorchStates.None)
+            {
+                SetTorchState(TorchStates.GrabbingTorch);
+                Debug.Log("Sara ha recogido la antorcha.");
+                hasTorch = true;
+                anim.SetBool("hasTorch", true);
+            }
+        }
+
+        if (torchState == TorchStates.GrabbingTorch && grabState == GrabStates.None)
+        {
+            SetTorchState(TorchStates.HasTorch);
+        }
+
+        //if (hasTorch && Input.GetKeyDown(KeyCode.V))
+        //{
+        //    hasTorch = false;
+        //    anim.SetBool("grabTorch", false);
+        //    Debug.Log("Sara ha soltado la antorcha");
+        //}
+    }
+
+    void HasTorch()
+    {
+        //if (hasTorch)
+        //    anim.
+    }
+    public void UpdateHit()
+    {
+        if (Input.GetKeyDown(KeyCode.J) && hitState == HitStates.None)
+        {
+            //anim.SetTrigger("kick");
+            SetHitState(HitStates.Kicking);
+        }
+    }
+
     void RaycastToBottom()
     {
         Ray _ray = new Ray(cmFollow.position, Vector3.down);
@@ -152,6 +231,22 @@ public class SaraMovement : MonoBehaviour
         }
     }
 
+    void RaycastToLeft()
+    {
+        Ray _ray = new Ray(cmFollow.position, cmFollow.forward);
+        RaycastHit hit;
+        bool result = Physics.Raycast(_ray, out hit, 1f);
+
+        if (result)
+        {
+            Debug.DrawRay(_ray.origin, _ray.direction * hit.distance, Color.red);
+        }
+        else
+        {
+            Debug.DrawRay(_ray.origin, _ray.direction * 1f, Color.green);
+        }
+    }
+
     public void SetMoveState(MoveStates _newState)
     {
         moveState = _newState;
@@ -159,7 +254,9 @@ public class SaraMovement : MonoBehaviour
         switch (moveState)
         {
             case MoveStates.Idle:
+                speedMove = 0f;
                 anim.SetInteger("move", 0);
+                //SetGrabState(GrabStates.None);
                 break;
             case MoveStates.Walking:
                 speedMove = speedWalk;
@@ -178,7 +275,7 @@ public class SaraMovement : MonoBehaviour
         switch (jumpState)
         {
             case JumpStates.Grounded:
-                anim.SetInteger("jump", 0);
+                anim.SetInteger("jump", 0);                
                 break;
             case JumpStates.Jumping:
                 rb.velocity = Vector3.zero;
@@ -191,9 +288,73 @@ public class SaraMovement : MonoBehaviour
                 break;
         }
     }
+    public void SetGrabState(GrabStates _newState)
+    {
+        grabState = _newState;
+
+        switch (grabState)
+        {
+            case GrabStates.None:
+                if (hasTorch)
+                {
+                }
+                // SaraGrabbing script
+                break;
+            case GrabStates.Grabbing:
+                anim.SetTrigger("grab");
+                break;
+        }
+    }
+    public void SetTorchState(TorchStates _newState)
+    {
+        torchState = _newState;
+
+        switch (torchState)
+        {
+            case TorchStates.None:
+                break;
+            case TorchStates.GrabbingTorch:
+                break;
+            case TorchStates.HasTorch:
+                if (torch != null)
+                {
+                    Transform _leftHand = transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+                    torch.SetParent(_leftHand);
+                    torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
+                    torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                }
+                break;
+        }
+    }
+
+    public void SetHitState(HitStates _newState)
+    {
+        hitState = _newState;
+
+        switch (hitState)
+        {
+            case HitStates.None:
+                break;
+            case HitStates.Punching:
+                break;
+            case HitStates.Kicking:
+                anim.SetTrigger("kick");
+                //speedMove = 0;
+                SetMoveState(MoveStates.Idle);
+                break;
+            case HitStates.Stamping:
+                break;
+        }
+    }
     #endregion
 
     public enum MoveStates { Idle, Walking, Running }
 
     public enum JumpStates { Grounded, Jumping, Falling }
+
+    public enum GrabStates { None, Grabbing }
+
+    public enum TorchStates { None, GrabbingTorch, HasTorch }
+
+    public enum HitStates { None, Punching, Kicking, Stamping }
 }

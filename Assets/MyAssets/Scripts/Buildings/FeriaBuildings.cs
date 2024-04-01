@@ -164,8 +164,8 @@ public class FeriaBuildings : MonoBehaviour
 
         // Ticket: 2 - 3
         _transformData.position = ticket.position + new Vector3(-2f, 0f, 1.5f);
-        Debug.Log("Tiquet posición: " + ticket.position);
-        Debug.Log("Employee Tiquet posición: " + _transformData.position);
+        //Debug.Log("Tiquet posición: " + ticket.position);
+        //Debug.Log("Employee Tiquet posición: " + _transformData.position);
         _transformData.rotation = Quaternion.Euler(0f, -90f, 0f);
         employeesTransformData.Add(_transformData);
         _transformData.position = ticket.position + new Vector3(-1.5f, 0f, 0.8f);
@@ -240,7 +240,7 @@ public class FeriaBuildings : MonoBehaviour
         {
             int _v = i / 8;
             int _w = (int)Math.Pow(-1, _v);
-            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -4f * _w);
+            _transformData.position = shops[i].position + new Vector3(-1.5f * _w, 0f, -3.5f * _w);
             _transformData.rotation = Quaternion.Euler(0f, 90f + 90f * -_w, 0f);
             peopleTransformData.Add(_transformData);
         }
@@ -263,8 +263,22 @@ public class FeriaBuildings : MonoBehaviour
         _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
         peopleTransformData.Add(_transformData);
 
+        // Zona de entretenimiento: 51-54
 
+        _transformData.rotation = Quaternion.Euler(0f, 0f, 0f);
+        _transformData.position = new Vector3(50f, 0f, 16f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(50f, 0f, -6f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(57f, 0f, 16f);
+        peopleTransformData.Add(_transformData);
+        _transformData.position = new Vector3(57f, 0f, -6f);
+        peopleTransformData.Add(_transformData);
 
+        // Fila para tiquete
+        _transformData.rotation = Quaternion.Euler(0f, 180f, 0f);
+        _transformData.position = ticket.position + new Vector3(-4f, 0f, 3f);
+        peopleTransformData.Add(_transformData);
 
         // Extra4: 52
         _transformData.position = new Vector3(23.6f, 0f, 13.5f);
@@ -327,7 +341,8 @@ public class FeriaBuildings : MonoBehaviour
         Shop11, Shop12, Shop13, Shop14, Shop15, Shop16, Shop17, Shop18, Shop19, Shop20,
         Shop21, Shop22, Shop23, Shop24, Shop25, Shop26, Shop27, Shop28, Shop29, Shop30,
         Shop31, Shop32, Shop33, Shop34, Shop35, Shop36, Shop37, Shop38, Shop39, Shop40,
-        Map, TicketGames, Carousel, Noria,
+        Map, TicketGames, Carousel, Noria, FreeZone1, FreeZone2, FreeZone3, FreeZone4,
+        TicketLine,
         Extra1, Extra2, Extra3, Extra4, Extra5, Extra6, Extra7, Extra8, Extra9, Extra10
     }
 
