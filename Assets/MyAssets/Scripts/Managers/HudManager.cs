@@ -15,7 +15,7 @@ public class HudManager : MonoBehaviour
     #region Variables
     public static HudManager instance;
 
-    Image lifeBar;
+    public Image lifeBar;
     public Image dialogueBackground;
     public TextMeshProUGUI dialogueText;
 
@@ -40,6 +40,8 @@ public class HudManager : MonoBehaviour
         float _maxLife = PlayerDataManager.instance.playerData.maxLife;
         float _lifeNormalized = _lifeActual / _maxLife;
         lifeBar.fillAmount = _lifeNormalized;
+
+        Debug.Log("La vida actual es " + _lifeNormalized);
     }
 
     public void UpdateDialogue(string _text)

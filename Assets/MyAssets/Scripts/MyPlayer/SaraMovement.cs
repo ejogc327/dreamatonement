@@ -86,10 +86,10 @@ public class SaraMovement : MonoBehaviour
             isOnTorch = true;
             torch = other.transform;
         }
-        if (other.gameObject.CompareTag("Fire"))
+        /*if (other.gameObject.CompareTag("Fire"))
         {
             isOnFire = true;
-        }
+        }*/
         if (other.gameObject.CompareTag("People"))
         {
             var _direction = transform.InverseTransformPoint(other.transform.position); //this helps us find which direction the object collided from
@@ -198,7 +198,7 @@ public class SaraMovement : MonoBehaviour
             {
                 SetTorchState(TorchStates.GrabbingTorch);
                 Debug.Log("Sara ha recogido la antorcha.");
-                hasTorch = true;
+                //hasTorch = true;
                 anim.SetBool("hasTorch", true);
             }
         }
@@ -224,6 +224,17 @@ public class SaraMovement : MonoBehaviour
             SetTorchState(TorchStates.LightingTorch);
         }
         //    anim.
+    }
+
+    public void SetTorch()
+    {
+        if (isOnTorch && torch != null)
+        {
+            Transform _leftHand = transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+            torch.SetParent(_leftHand);
+            torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
+            torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
+        }
     }
 
     public void SetFireOnTorch()
@@ -334,9 +345,7 @@ public class SaraMovement : MonoBehaviour
         switch (grabState)
         {
             case GrabStates.None:
-                if (hasTorch)
-                {
-                }
+                
                 // SaraGrabbing script
                 break;
             case GrabStates.Grabbing:
@@ -353,15 +362,10 @@ public class SaraMovement : MonoBehaviour
             case TorchStates.None:
                 break;
             case TorchStates.GrabbingTorch:
+                
                 break;
             case TorchStates.HasTorch:
-                if (torch != null)
-                {
-                    Transform _leftHand = transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
-                    torch.SetParent(_leftHand);
-                    torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
-                    torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
-                }
+                
                 break;
             case TorchStates.LightingTorch:
                 break;

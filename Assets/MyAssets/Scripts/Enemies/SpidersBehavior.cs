@@ -15,13 +15,14 @@ public class SpidersBehavior : MonoBehaviour
     public TransformData destination;
     public float diff;
     float counter;
-
+    bool isOnAttack;
     public Vector3 initialPosition;
     public Transform sara;
     int numAttack;
 
     NavMeshAgent agent;
-    Animator anim;
+    //Animator anim;
+    Animation anim;
 
 
     #endregion
@@ -30,7 +31,7 @@ public class SpidersBehavior : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        //anim = transform.GetChild(0).GetComponent<Animator>();
+        anim = transform.GetChild(0).GetComponent<Animation>();
         sara = GameObject.FindWithTag("Player").transform;
     }
 
@@ -49,6 +50,11 @@ public class SpidersBehavior : MonoBehaviour
             UpdateSpiderAction();
             MovingToSara();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastToFront();
     }
 
     /*void OnCollisionEnter(Collision collision)
@@ -106,8 +112,33 @@ public class SpidersBehavior : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         numAttack++;
+        if (isOnAttack)
+            PlayerDataManager.instance.SubstractLife(1f);
+
         Debug.Log("Atacando..." + numAttack);
         SetSpiderAction(SpiderActions.MoveToSara);
+    }
+
+    void RaycastToFront()
+    {
+        Ray _ray = new Ray(transform.position + new Vector3(0f, 0.1f, 0f), transform.forward);
+        RaycastHit _hit;
+        bool _result = Physics.Raycast(_ray, out _hit, 0.3f);
+
+        if (_result)
+        {
+            Debug.DrawRay(_ray.origin, _ray.direction * _hit.distance, Color.red);
+            if (_hit.transform.CompareTag("Player"))
+            {
+                isOnAttack = true;
+            }
+            else isOnAttack = false;
+        }
+        else
+        {
+            Debug.DrawRay(_ray.origin, _ray.direction * 0.3f, Color.green);
+            isOnAttack = false;
+        }
     }
 
     public void SetSpiderAction(SpiderActions _newAction)
@@ -116,20 +147,23 @@ public class SpidersBehavior : MonoBehaviour
 
         switch (spiderAction)
         {
-            case SpiderActions.None:
+            case SpiderActions.Idle:
+                anim.Play("idle");
                 break;
             case SpiderActions.MoveToSara:
                 agent.isStopped = false;
+                anim.Play("walk");
                 StopCoroutine(WaitAttack());
                 break;
             case SpiderActions.BackToInitialPosition:
                 agent.isStopped = false;
+                anim.Play("walk");
                 agent.SetDestination(initialPosition);
                 break;
             case SpiderActions.Attacking:
                 agent.isStopped = true;
+                anim.Play("attack1");
                 StartCoroutine(WaitAttack());
-                PlayerDataManager.instance.SubstractLife(2f);
                 break;
             case SpiderActions.Dying:
                 agent.isStopped = true;
@@ -140,7 +174,7 @@ public class SpidersBehavior : MonoBehaviour
 
     public enum SpiderActions
     {
-        None,
+        Idle,
         MoveToSara,
         BackToInitialPosition,
         Attacking,
