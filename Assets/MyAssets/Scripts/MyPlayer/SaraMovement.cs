@@ -29,6 +29,7 @@ public class SaraMovement : MonoBehaviour
 
     public bool isOnTorch;
     public bool hasTorch;
+    public bool isOnFire;
 
     Transform torch;
 
@@ -66,6 +67,7 @@ public class SaraMovement : MonoBehaviour
         Grab();
 
         UpdateHit();
+        UpdateTorch();
         //Run();
     }
 
@@ -83,6 +85,10 @@ public class SaraMovement : MonoBehaviour
         {
             isOnTorch = true;
             torch = other.transform;
+        }
+        if (other.gameObject.CompareTag("Fire"))
+        {
+            isOnFire = true;
         }
         if (other.gameObject.CompareTag("People"))
         {
@@ -210,11 +216,25 @@ public class SaraMovement : MonoBehaviour
         //}
     }
 
-    void HasTorch()
+    void UpdateTorch()
     {
-        //if (hasTorch)
+        if (Input.GetKeyDown(KeyCode.I) && torchState == TorchStates.HasTorch)
+        {
+            anim.SetTrigger("light");
+            SetTorchState(TorchStates.LightingTorch);
+        }
         //    anim.
     }
+
+    public void SetFireOnTorch()
+    {
+        if (isOnFire)
+        {
+            Torch _script = torch.GetComponent<Torch>();
+            _script.LightFire(true);
+        }
+    }
+
     public void UpdateHit()
     {
         if (Input.GetKeyDown(KeyCode.J) && hitState == HitStates.None)
@@ -263,6 +283,9 @@ public class SaraMovement : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Machine States
     public void SetMoveState(MoveStates _newState)
     {
         moveState = _newState;
@@ -340,6 +363,8 @@ public class SaraMovement : MonoBehaviour
                     torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
                 }
                 break;
+            case TorchStates.LightingTorch:
+                break;
         }
     }
 
@@ -372,7 +397,7 @@ public class SaraMovement : MonoBehaviour
 
     public enum GrabStates { None, Grabbing }
 
-    public enum TorchStates { None, GrabbingTorch, HasTorch }
+    public enum TorchStates { None, GrabbingTorch, HasTorch, LightingTorch }
 
     public enum HitStates { None, Punching, Kicking, Stomping }
 }

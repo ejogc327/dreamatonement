@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class FeriaManager : MonoBehaviour
 {
@@ -22,9 +23,11 @@ public class FeriaManager : MonoBehaviour
     public CinemachineVirtualCamera vcThirdPersonSara;
     public CinemachineVirtualCamera vcKinematicsMap;
     public CinemachineVirtualCamera vcKinematicsTransition;
+    public CinemachineVirtualCamera vcCarousel;
 
 
     public CinemachinePostProcessing postProcessing;
+    public PostProcessProfile[] profiles;
 
     //public bool isKinematics;
 
@@ -137,6 +140,7 @@ public class FeriaManager : MonoBehaviour
 
                 _trigger = transform.GetChild(1).GetChild(0).gameObject;
                 _trigger.SetActive(true);
+                //postProcessing.m_Profile = profiles[1];
 
                 //MatiBehavior.instance.SetMatiAction(MatiBehavior.MatiActions.FollowSara);
 
@@ -185,7 +189,8 @@ public class FeriaManager : MonoBehaviour
                 //anim.enabled = false;
                 anim.SetInteger("state", 6);
                 saraAgent.enabled = false;
-                postProcessing.enabled = true;
+                //postProcessing.enabled = true;
+                postProcessing.m_Profile = profiles[1];
                 //transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
                 saraMovementScript.enabled = true;
@@ -193,6 +198,22 @@ public class FeriaManager : MonoBehaviour
 
                 RenderSettings.fog = true;
                 //FeriaEnemies.instance.CreateHumanoids();
+                break;
+            case FeriaStates.KinematicsCarousel:
+                vcThirdPersonSara.m_Priority = 0;
+                vcCarousel.m_Priority = 2;
+                //anim.SetInteger("state", 3);
+                //saraAgent.enabled = true;
+
+                _trigger = transform.GetChild(1).GetChild(2).gameObject;
+                _trigger.SetActive(false);
+
+                //SaraAnimatorIk.instance.SetTargetPositionMap();
+
+                saraMovementScript.enabled = false;
+                saraBehaviorScript.enabled = true;
+                break;
+            case FeriaStates.Gameplay4:
                 break;
         }
     }
@@ -231,7 +252,8 @@ public class FeriaManager : MonoBehaviour
 
     public enum FeriaStates
     {
-        Intro, Gameplay1, KinematicsMap, Gameplay2, KinematicsTransition, Gameplay3
+        Intro, Gameplay1, KinematicsMap, Gameplay2, KinematicsTransition, Gameplay3, 
+        KinematicsCarousel, Gameplay4
     }
 }
 

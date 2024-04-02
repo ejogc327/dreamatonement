@@ -25,12 +25,12 @@ public class Torch : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        /*if (Input.GetKeyDown(KeyCode.F))
         {
             isLit = !isLit;
             GameObject _fire = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             _fire.SetActive(isLit);
-        }
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +44,10 @@ public class Torch : MonoBehaviour
     #endregion
 
     #region Funciones Propias
-
+    public void LightFire(bool _lit)
+    {
+        GameObject _fire = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+        _fire.SetActive(_lit);
+    }
     #endregion
 }

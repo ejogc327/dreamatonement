@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ public class Minimap : MonoBehaviour
     #region Variables
     public Transform player;
     public Canvas canvas;
-    public Image image;
+    public Image image;    
     bool mapBig;
     #endregion
 
