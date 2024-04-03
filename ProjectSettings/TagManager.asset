@@ -12,6 +12,9 @@ TagManager:
   - CollectibleTargets
   - Torch
   - People
+  - Web
+  - Fire
+  - Spiders
   layers:
   - Default
   - TransparentFX

@@ -30,8 +30,11 @@ public class SaraMovement : MonoBehaviour
     public bool isOnTorch;
     public bool hasTorch;
     public bool isOnFire;
+    public bool isOnWeb;
 
     Transform torch;
+    Transform spiderWeb;
+    Transform spider;
 
     Transform cam;
     Rigidbody rb;
@@ -86,10 +89,10 @@ public class SaraMovement : MonoBehaviour
             isOnTorch = true;
             torch = other.transform;
         }
-        /*if (other.gameObject.CompareTag("Fire"))
+        if (other.gameObject.CompareTag("Fire"))
         {
             isOnFire = true;
-        }*/
+        }
         if (other.gameObject.CompareTag("People"))
         {
             var _direction = transform.InverseTransformPoint(other.transform.position); //this helps us find which direction the object collided from
@@ -105,6 +108,18 @@ public class SaraMovement : MonoBehaviour
                 print("The object collided with the left side of the ball!");
             }
         }
+
+        if (other.gameObject.CompareTag("Web"))
+        {
+            isOnWeb = true;
+            spiderWeb = other.transform;
+        }
+
+        if (other.gameObject.CompareTag("Spiders"))
+        {
+            //isOnWeb = true;
+            spider = other.transform;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -114,9 +129,23 @@ public class SaraMovement : MonoBehaviour
             isOnTorch = false;
             torch = null;
         }
+        if (other.gameObject.CompareTag("Fire"))
+        {
+            isOnFire = false;
+        }
         if (other.gameObject.CompareTag("People"))
         {
             anim.SetInteger("someoneNext", 0);
+        }
+        if (other.gameObject.CompareTag("Web"))
+        {
+            isOnWeb = false;
+            spiderWeb = null;
+        }
+        if (other.gameObject.CompareTag("Spiders"))
+        {
+            //isOnWeb = true;
+            spider = null;
         }
     }
 
@@ -223,6 +252,18 @@ public class SaraMovement : MonoBehaviour
             anim.SetTrigger("light");
             SetTorchState(TorchStates.LightingTorch);
         }
+
+        if (Input.GetKeyDown(KeyCode.O) && torchState == TorchStates.HasTorch)
+        {
+            anim.SetTrigger("burnWeb");
+            SetTorchState(TorchStates.BurningWeb);
+        }
+
+        if (Input.GetKeyDown(KeyCode.U) && torchState == TorchStates.HasTorch)
+        {
+            anim.SetTrigger("attackDownward");
+            SetTorchState(TorchStates.AttackDownward);
+        }
         //    anim.
     }
 
@@ -234,6 +275,8 @@ public class SaraMovement : MonoBehaviour
             torch.SetParent(_leftHand);
             torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
             torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            SphereCollider _collider = torch.GetComponent<SphereCollider>();
+            _collider.enabled = false;
         }
     }
 
@@ -243,6 +286,20 @@ public class SaraMovement : MonoBehaviour
         {
             Torch _script = torch.GetComponent<Torch>();
             _script.LightFire(true);
+        }
+    }
+
+    public void BurningWeb(int _value)
+    {
+        if (isOnWeb && spiderWeb != null)
+        {
+            SpiderWeb _script = spiderWeb.GetComponent<SpiderWeb>();
+            _script.BurningWeb(_value);
+            if (_value == 2)
+            {
+                BoxCollider _collider = spiderWeb.GetChild(0).GetComponent<BoxCollider>();
+                _collider.enabled = false;
+            }
         }
     }
 
@@ -362,12 +419,16 @@ public class SaraMovement : MonoBehaviour
             case TorchStates.None:
                 break;
             case TorchStates.GrabbingTorch:
-                
+
                 break;
             case TorchStates.HasTorch:
-                
+
                 break;
             case TorchStates.LightingTorch:
+                break;
+            case TorchStates.BurningWeb:
+                break;
+            case TorchStates.AttackDownward:
                 break;
         }
     }
@@ -386,9 +447,15 @@ public class SaraMovement : MonoBehaviour
                 anim.SetTrigger("kick");
                 //speedMove = 0;
                 SetMoveState(MoveStates.Idle);
+                //if ()
                 break;
             case HitStates.Stomping:
                 anim.SetTrigger("stomp");
+                if (spider != null)
+                {
+                    SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
+                    _script.SetSpiderAction(SpidersBehavior.SpiderActions.Dying);
+                }
                 SetMoveState(MoveStates.Idle);
                 break;
         }
@@ -401,7 +468,7 @@ public class SaraMovement : MonoBehaviour
 
     public enum GrabStates { None, Grabbing }
 
-    public enum TorchStates { None, GrabbingTorch, HasTorch, LightingTorch }
+    public enum TorchStates { None, GrabbingTorch, HasTorch, LightingTorch, BurningWeb, AttackDownward }
 
     public enum HitStates { None, Punching, Kicking, Stomping }
 }

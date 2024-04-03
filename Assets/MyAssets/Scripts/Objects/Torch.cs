@@ -46,7 +46,7 @@ public class Torch : MonoBehaviour
     #region Funciones Propias
     public void LightFire(bool _lit)
     {
-        GameObject _fire = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
+        GameObject _fire = transform.GetChild(0).GetChild(0).gameObject;
         _fire.SetActive(_lit);
     }
     #endregion

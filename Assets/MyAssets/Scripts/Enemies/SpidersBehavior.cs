@@ -88,7 +88,7 @@ public class SpidersBehavior : MonoBehaviour
     {
         diff = (transform.position - sara.position).magnitude;
 
-        if (diff <= 0.5f)
+        if (diff <= 0.5f && (spiderAction == SpiderActions.Idle || spiderAction == SpiderActions.MoveToSara))
         {
             SetSpiderAction(SpiderActions.Attacking);
         }
@@ -166,6 +166,7 @@ public class SpidersBehavior : MonoBehaviour
                 StartCoroutine(WaitAttack());
                 break;
             case SpiderActions.Dying:
+                anim.Play("dying");
                 agent.isStopped = true;
                 break;
         }

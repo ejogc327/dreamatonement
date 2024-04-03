@@ -13,6 +13,8 @@ public class FeriaEnemies : MonoBehaviour
 
     public Transform humanoidsOrigin;
     List<Transform> humanoids = new List<Transform>();
+    public Transform spidersOrigin;
+    List<Transform> spiders = new List<Transform>();
 
     #endregion
 
@@ -26,6 +28,14 @@ public class FeriaEnemies : MonoBehaviour
     private void Start()
     {
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L)) 
+        {
+            CreateSpiders();
+        }
+    }
     #endregion
 
     #region 3. Funciones Propias
@@ -37,6 +47,19 @@ public class FeriaEnemies : MonoBehaviour
 
         humanoids.Add(Instantiate(humanoidsOrigin, _position, _rotation));
         humanoids[i].SetParent(transform.GetChild(0));
+        i++;
+    }
+
+    public void CreateSpiders()
+    {
+        int i = 0;
+        Vector3 _position;
+        Quaternion _rotation = Quaternion.identity;
+
+        _position = new Vector3(20f, 0f, 13.25f);
+
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
         i++;
     }
 
