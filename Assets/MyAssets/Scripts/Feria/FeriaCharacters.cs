@@ -30,6 +30,16 @@ public class FeriaCharacters : MonoBehaviour
         sara = GameObject.FindWithTag("Player").transform;
         mati = GameObject.FindWithTag("Mati").transform;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            DestroyEmployees();
+            DestroyPeople();
+            DestroyKids();
+        }
+    }
     #endregion
 
     #region 3. Funciones Propias
@@ -154,6 +164,33 @@ public class FeriaCharacters : MonoBehaviour
     {
         mati.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].position + Vector3.forward * 0.25f;
         mati.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].rotation;
+    }
+
+    void DestroyEmployees()
+    {
+        Debug.Log("destruyendo empleados");
+        foreach (Transform _t in transform.GetChild(0).transform)
+        {
+            Destroy(_t.gameObject);
+        }
+    }
+
+    void DestroyPeople()
+    {
+        Debug.Log("destruyendo gente");
+        foreach (Transform _t in transform.GetChild(1).transform)
+        {
+            Destroy(_t.gameObject);
+        }
+    }
+
+    void DestroyKids()
+    {
+
+        foreach (Transform _t in transform.GetChild(2).transform)
+        {
+            Destroy(_t.gameObject);
+        }
     }
 
     void CheckIfOverlap(Transform _transform)

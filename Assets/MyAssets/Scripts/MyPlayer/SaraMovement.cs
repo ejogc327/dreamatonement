@@ -158,14 +158,12 @@ public class SaraMovement : MonoBehaviour
         axis.y = Input.GetAxisRaw("Vertical");
     }
 
-
     void SetMoveDirection()
     {
         dirMove = cam.right * axis.x + cam.forward * axis.y;
         dirMove.y = 0f;
         dirMove.Normalize();
     }
-
 
     void UpdateMoveState()
     {
@@ -184,22 +182,6 @@ public class SaraMovement : MonoBehaviour
         }
         
     }
-
-    // void Run()
-    // {
-    //     if (Input.GetKey(KeyCode.LeftShift))            
-    //     {
-    //         speedMove = speedRun;
-    //         if (moveState == MoveStates.Walking)
-    //             SetMoveState(MoveStates.Running);
-    //     }
-    //     else
-    //     {
-    //         speedMove = speedWalk;
-    //         if (axis.magnitude != 0f && moveState == MoveStates.Running)
-    //             SetMoveState(MoveStates.Walking);
-    //     }
-    // }
 
     void SoftedRotation()
     {
@@ -271,10 +253,10 @@ public class SaraMovement : MonoBehaviour
     {
         if (isOnTorch && torch != null)
         {
-            Transform _leftHand = transform.GetChild(0).GetChild(2).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+            Transform _leftHand = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0) ;
             torch.SetParent(_leftHand);
             torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
-            torch.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            torch.localRotation = Quaternion.Euler(0f, 0f, 0f);
             SphereCollider _collider = torch.GetComponent<SphereCollider>();
             _collider.enabled = false;
         }

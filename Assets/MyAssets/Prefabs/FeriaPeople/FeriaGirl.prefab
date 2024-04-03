@@ -836,6 +836,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Girl10
       objectReference: {fileID: 0}
+    - target: {fileID: 4871667545602917704, guid: 69fbbbdcbb09bf44bb7efd53f790aae5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6988ab00985f75648961599a140a5491, type: 2}
     - target: {fileID: 5866666021909216657, guid: 69fbbbdcbb09bf44bb7efd53f790aae5, type: 3}
       propertyPath: m_Controller
       value: 

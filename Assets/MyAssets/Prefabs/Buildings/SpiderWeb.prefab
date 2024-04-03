@@ -389,7 +389,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5284440556036065822}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: da37a217e61f9a64e87c31fbdc7d6d84, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -416,6 +416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   val: 0
-  spiderwebComplete: {fileID: 2800000, guid: 4c552a093857ac040bc6f18257b2f3e9, type: 3}
+  spiderwebComplete: {fileID: 2800000, guid: efd57141fb556ab4c91eed33fe84c296, type: 3}
   spiderwebMedium: {fileID: 2800000, guid: 7d1357716e3f66f4aac613cabba6634c, type: 3}
   spiderwebDestroyed: {fileID: 2800000, guid: ff80752c0f95dd44884979e9faaefba1, type: 3}

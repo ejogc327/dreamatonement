@@ -832,10 +832,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3264369479159564333, guid: 040c3e7bcf3459b41b2a125a5b912f6a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4a0bd03e477a2024480bcc41da0bf37f, type: 2}
     - target: {fileID: 919132149155446097, guid: 040c3e7bcf3459b41b2a125a5b912f6a, type: 3}
       propertyPath: m_Name
       value: Boy10
       objectReference: {fileID: 0}
+    - target: {fileID: 2649295955901685178, guid: 040c3e7bcf3459b41b2a125a5b912f6a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 08c170b0862e83443a75690d36979776, type: 2}
     - target: {fileID: 5866666021909216657, guid: 040c3e7bcf3459b41b2a125a5b912f6a, type: 3}
       propertyPath: m_Controller
       value: 

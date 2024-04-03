@@ -17,11 +17,6 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: male_casualsuit02
-    second: {fileID: 2100000, guid: 653b9d550c9fdd543bfefed5b60b1000, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
       name: menstandard180
     second: {fileID: 2100000, guid: d89dd5bd2bd4c224e90db47fc446af3d, type: 2}
   - first:
