@@ -12,7 +12,7 @@ public class MusicManager : MonoBehaviour
     public static MusicManager instance;
     AudioSource audioSource;
     public AudioClip musicMainMenu;
-    public AudioClip musicGameplay;
+    public AudioClip[] musicGameplay;
 
     #endregion
 
@@ -33,17 +33,22 @@ public class MusicManager : MonoBehaviour
             audioSource.clip = musicMainMenu;
             audioSource.Play();
         }
-        else if (_num == 1) 
+        else if (_num <= musicGameplay.Length)
         {
-            if (audioSource.clip != null)
+            if (audioSource.clip != null)         
             {
-                if (audioSource.clip != musicGameplay)
+                if (audioSource.clip != musicGameplay[_num - 1])
                 {
-                    audioSource.clip = musicGameplay;
+                    audioSource.clip = musicGameplay[_num - 1];
                     audioSource.Play();
                 }
                 else
                     Resume();
+            }
+            else
+            {
+                audioSource.clip = musicGameplay[_num - 1];
+                audioSource.Play();
             }
         }
     }

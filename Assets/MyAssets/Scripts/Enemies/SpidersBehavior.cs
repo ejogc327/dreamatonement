@@ -166,7 +166,11 @@ public class SpidersBehavior : MonoBehaviour
                 StartCoroutine(WaitAttack());
                 break;
             case SpiderActions.Dying:
-                anim.Play("dying");
+                anim.Play("death2");
+                agent.isStopped = true;
+                break;
+            case SpiderActions.DyingBurn:
+                anim.Play("death1");
                 agent.isStopped = true;
                 break;
         }
@@ -179,6 +183,7 @@ public class SpidersBehavior : MonoBehaviour
         MoveToSara,
         BackToInitialPosition,
         Attacking,
-        Dying
+        Dying,
+        DyingBurn
     }
 }

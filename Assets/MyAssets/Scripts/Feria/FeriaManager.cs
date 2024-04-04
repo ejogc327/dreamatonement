@@ -16,7 +16,7 @@ public class FeriaManager : MonoBehaviour
     public static FeriaManager instance;
     public FeriaStates state;
 
-    //Transform cam;
+    Camera cam;
     Animator anim;
     public CinemachineVirtualCamera vc0;
     public CinemachineVirtualCamera vcIntro;
@@ -45,7 +45,7 @@ public class FeriaManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        //cam = Camera.main.transform;
+        cam = Camera.main;
 
         anim = GetComponent<Animator>();
         //anim = GameObject GetComponent<Animator>();
@@ -59,7 +59,7 @@ public class FeriaManager : MonoBehaviour
 
     private void Start()
     {
-        SetFeriaState(FeriaStates.Gameplay1);
+        SetFeriaState(FeriaStates.Intro);
 
         FeriaCharacters.instance.CreateFeriaPeople();
         FeriaCharacters.instance.StartPositionSara();
@@ -85,16 +85,21 @@ public class FeriaManager : MonoBehaviour
         //}
 
 
-    //    if (state == FeriaStates.Gameplay1 && other.gameObject.CompareTag("Player"))
-    //    {
-    //        //isPlayerInside = true;
-    //        SetFeriaState(FeriaStates.KinematicsMap);
-    //    }
-    //    if (state == FeriaStates.Gameplay2 && other.gameObject.CompareTag("Player"))
-    //    {
-    //        //isPlayerInside = true;
-    //        SetFeriaState(FeriaStates.KinematicsTransition);
-    //    }
+        if (state == FeriaStates.Gameplay1 && other.gameObject.CompareTag("Player"))
+        {
+            //isPlayerInside = true;
+            SetFeriaState(FeriaStates.KinematicsMap);
+        }
+        if (state == FeriaStates.Gameplay2 && other.gameObject.CompareTag("Player"))
+        {
+            //isPlayerInside = true;
+            SetFeriaState(FeriaStates.KinematicsTransition);
+        }
+        if (state == FeriaStates.Gameplay3 && other.gameObject.CompareTag("Player"))
+        {
+            //isPlayerInside = true;
+            SetFeriaState(FeriaStates.KinematicsCarousel);
+        }
     }
 
 
@@ -117,6 +122,7 @@ public class FeriaManager : MonoBehaviour
     {
         state = _newState;
         GameObject _trigger;
+        CinemachineBrain _brain = cam.GetComponent<CinemachineBrain>();
         switch (state)
         {
             case FeriaStates.Intro:
@@ -147,7 +153,8 @@ public class FeriaManager : MonoBehaviour
                 saraMovementScript.enabled = true;
                 saraBehaviorScript.enabled = false;
 
-
+                MusicManager.instance.Play(1);
+                //SoundManager.instance.Play(0);
                 break;
             case FeriaStates.KinematicsMap:
                 vcThirdPersonSara.m_Priority = 0;
@@ -166,10 +173,8 @@ public class FeriaManager : MonoBehaviour
             case FeriaStates.Gameplay2:
                 vcKinematicsMap.m_Priority = 0;
                 vcThirdPersonSara.m_Priority = 2;
-                //anim.enabled = false;
                 anim.SetInteger("state", 4);
                 saraAgent.enabled = false;
-                //transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
 
                 saraMovementScript.enabled = true;
                 saraBehaviorScript.enabled = false;
@@ -180,8 +185,13 @@ public class FeriaManager : MonoBehaviour
                 anim.SetInteger("state", 5);
                 saraAgent.enabled = false;
 
+                _trigger = transform.GetChild(1).GetChild(1).gameObject;
+                _trigger.SetActive(false);
+
                 saraMovementScript.enabled = false;
                 saraBehaviorScript.enabled = true;
+                SaraMovement.instance.SetHasFobia(true);
+                MusicManager.instance.Play(2);
                 break;
             case FeriaStates.Gameplay3:
                 vcKinematicsTransition.m_Priority = 0;
@@ -198,12 +208,14 @@ public class FeriaManager : MonoBehaviour
 
                 RenderSettings.fog = true;
                 //FeriaEnemies.instance.CreateHumanoids();
+                _brain.m_DefaultBlend.m_Style = CinemachineBlendDefinition.Style.Cut;
                 break;
             case FeriaStates.KinematicsCarousel:
                 vcThirdPersonSara.m_Priority = 0;
                 vcCarousel.m_Priority = 2;
-                //anim.SetInteger("state", 3);
-                //saraAgent.enabled = true;
+                PostProcessProfile _profile = vcCarousel.GetComponent<CinemachinePostProcessing>().m_Profile;
+                CameraCarousel _script = vcCarousel.GetComponent<CameraCarousel>();
+                _script.StartAnimation(_profile);
 
                 _trigger = transform.GetChild(1).GetChild(2).gameObject;
                 _trigger.SetActive(false);
@@ -214,6 +226,15 @@ public class FeriaManager : MonoBehaviour
                 saraBehaviorScript.enabled = true;
                 break;
             case FeriaStates.Gameplay4:
+                vcKinematicsTransition.m_Priority = 0;
+                vcThirdPersonSara.m_Priority = 2;
+                //anim.SetInteger("state", 6);
+                saraAgent.enabled = false;
+                postProcessing.m_Profile = profiles[2];
+                //postProcessing.enabled = true;
+
+                saraMovementScript.enabled = true;
+                saraBehaviorScript.enabled = false;
                 break;
         }
     }
@@ -248,6 +269,15 @@ public class FeriaManager : MonoBehaviour
         SetFeriaState(FeriaStates.Gameplay3);
     }
 
+    public void Transition_Beat()
+    {
+        SoundManager.instance.PlayUi(2);
+    }
+
+    public void Carousel_End()
+    {
+        SetFeriaState(FeriaStates.Gameplay4);
+    }
     #endregion
 
     public enum FeriaStates

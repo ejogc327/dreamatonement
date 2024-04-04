@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     AudioSource audioSource;
     public AudioClip[] uiSounds;
+    public AudioClip[] sounds;
 
     #endregion
 
@@ -29,6 +30,11 @@ public class SoundManager : MonoBehaviour
     public void PlayUi(int _index)
     {
         audioSource.PlayOneShot(uiSounds[_index]);
+    }
+
+    public void Play(int _index)
+    {
+        audioSource.PlayOneShot(sounds[_index]);
     }
 
     #endregion

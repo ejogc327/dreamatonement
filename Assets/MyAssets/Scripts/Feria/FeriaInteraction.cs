@@ -78,6 +78,7 @@ public class FeriaInteraction : MonoBehaviour
         _spiderweb.SetParent(transform.GetChild(2));
 
         _position = new Vector3(23.5f, 0f, 2.6f);
+        _rotation = Quaternion.Euler(0f, 90f, 0f);
         _spiderweb = Instantiate(spiderwebOrigin, _position, _rotation);
         _spiderweb.localScale = new Vector3(1f, 1f, 1f);
         _spiderweb.SetParent(transform.GetChild(2));

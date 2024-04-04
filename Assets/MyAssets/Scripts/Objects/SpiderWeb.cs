@@ -16,14 +16,13 @@ public class SpiderWeb : MonoBehaviour
     public int val;
 
     public Texture spiderwebComplete, spiderwebMedium, spiderwebDestroyed;
-    MeshRenderer renderer;
     Material material;
     #endregion
 
     #region Funciones Unity
     private void Awake()
     {
-        renderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        MeshRenderer renderer = transform.GetChild(0).GetComponent<MeshRenderer>();
         material = renderer.material;
     }
 

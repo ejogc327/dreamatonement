@@ -18,6 +18,8 @@ public class HudManager : MonoBehaviour
     public Image lifeBar;
     public Image dialogueBackground;
     public TextMeshProUGUI dialogueText;
+    public Image helpBackground;
+    public TextMeshProUGUI helpText;
 
     public float startTime;
     public float delayStartTime;
@@ -47,6 +49,16 @@ public class HudManager : MonoBehaviour
     public void UpdateDialogue(string _text)
     {
         StartCoroutine(UpdateDialogueCoroutine(_text));
+    }
+    public void UpdateHelp(string _text)
+    {
+        helpBackground.gameObject.SetActive(true);
+        helpText.text = _text;
+    }
+
+    public void HideHelp()
+    {
+        helpBackground.gameObject.SetActive(false);
     }
 
     IEnumerator UpdateDialogueCoroutine(string _text)

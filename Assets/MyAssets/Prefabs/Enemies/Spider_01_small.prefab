@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2388312842879242773}
   m_Layer: 0
   m_Name: Spider_01_small
-  m_TagString: Untagged
+  m_TagString: Spiders
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ NavMeshAgent:
   m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 400
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

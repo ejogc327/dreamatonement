@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 ///
@@ -18,6 +19,7 @@ public class SaraMovement : MonoBehaviour
 
     Vector2 axis;
     Vector3 dirMove;
+    bool canMove;
     float speedMove;
     public float speedRot;
     public float speedWalk;
@@ -31,6 +33,8 @@ public class SaraMovement : MonoBehaviour
     public bool hasTorch;
     public bool isOnFire;
     public bool isOnWeb;
+    public bool isOnSpider;
+    public bool hasFobia;
 
     Transform torch;
     Transform spiderWeb;
@@ -57,17 +61,22 @@ public class SaraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetVirtualAxis();
-        SetMoveDirection();
-        UpdateMoveState();
-        SoftedRotation();
-        Jump();
-        Grab();
+        if (canMove)
+        {
+            SetVirtualAxis();
+            SetMoveDirection();
+            UpdateMoveState();
+            SoftedRotation();
+            Jump();
+            Grab();
+        }
+        //StopMovement();
 
         UpdateHit();
         UpdateTorch();
@@ -95,17 +104,18 @@ public class SaraMovement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("People"))
         {
-            var _direction = transform.InverseTransformPoint(other.transform.position); //this helps us find which direction the object collided from
-
-            if (_direction.x > 0f)
-            { //Change the axis to fit your needs
-                anim.SetInteger("someoneNext", 1);
-                print("The object collided with the right side of the ball!");
-            }
-            else if (_direction.x < 0f)
+            if (hasFobia)
             {
-                anim.SetInteger("someoneNext", 2);
-                print("The object collided with the left side of the ball!");
+                var _direction = transform.InverseTransformPoint(other.transform.position); //this helps us find which direction the object collided from
+
+                if (_direction.x > 0f)
+                { //Change the axis to fit your needs
+                    anim.SetInteger("someoneNext", 1);
+                }
+                else if (_direction.x < 0f)
+                {
+                    anim.SetInteger("someoneNext", 2);
+                }
             }
         }
 
@@ -117,7 +127,7 @@ public class SaraMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Spiders"))
         {
-            //isOnWeb = true;
+            isOnSpider = true;
             spider = other.transform;
         }
     }
@@ -144,7 +154,7 @@ public class SaraMovement : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Spiders"))
         {
-            //isOnWeb = true;
+            isOnSpider = false;
             spider = null;
         }
     }
@@ -202,7 +212,7 @@ public class SaraMovement : MonoBehaviour
 
     void Grab()
     {
-        if (Input.GetKeyDown(KeyCode.C) && jumpState == JumpStates.Grounded && moveState == MoveStates.Idle && grabState != GrabStates.Grabbing)
+        if (Input.GetKeyDown(KeyCode.C) && jumpState == JumpStates.Grounded && moveState == MoveStates.Idle && torchState != TorchStates.HasTorch && grabState != GrabStates.Grabbing)
         {
             SetGrabState(GrabStates.Grabbing);
             if (isOnTorch && torchState == TorchStates.None)
@@ -241,11 +251,6 @@ public class SaraMovement : MonoBehaviour
             SetTorchState(TorchStates.BurningWeb);
         }
 
-        if (Input.GetKeyDown(KeyCode.U) && torchState == TorchStates.HasTorch)
-        {
-            anim.SetTrigger("attackDownward");
-            SetTorchState(TorchStates.AttackDownward);
-        }
         //    anim.
     }
 
@@ -285,7 +290,7 @@ public class SaraMovement : MonoBehaviour
         }
     }
 
-    public void UpdateHit()
+    void UpdateHit()
     {
         if (Input.GetKeyDown(KeyCode.J) && hitState == HitStates.None)
         {
@@ -297,6 +302,16 @@ public class SaraMovement : MonoBehaviour
         {
             SetHitState(HitStates.Stomping);
         }
+
+        if (Input.GetKeyDown(KeyCode.U) && hitState == HitStates.None && torchState == TorchStates.HasTorch)
+        {
+            SetHitState(HitStates.TorchDownward);
+        }
+    }
+    
+    public void SetHasFobia(bool _hasFobia)
+    {
+        hasFobia = _hasFobia;
     }
 
     void RaycastToBottom()
@@ -345,7 +360,6 @@ public class SaraMovement : MonoBehaviour
             case MoveStates.Idle:
                 speedMove = 0f;
                 anim.SetInteger("move", 0);
-                //SetGrabState(GrabStates.None);
                 break;
             case MoveStates.Walking:
                 speedMove = speedWalk;
@@ -384,11 +398,14 @@ public class SaraMovement : MonoBehaviour
         switch (grabState)
         {
             case GrabStates.None:
-                
+
+                canMove = true;
                 // SaraGrabbing script
                 break;
             case GrabStates.Grabbing:
                 anim.SetTrigger("grab");
+                canMove = false;
+                SetMoveState(MoveStates.Idle);
                 break;
         }
     }
@@ -399,18 +416,22 @@ public class SaraMovement : MonoBehaviour
         switch (torchState)
         {
             case TorchStates.None:
+                canMove = true;
                 break;
             case TorchStates.GrabbingTorch:
+                canMove = false;
 
                 break;
             case TorchStates.HasTorch:
-
+                canMove = true;
                 break;
             case TorchStates.LightingTorch:
+                canMove = false;
+                SetMoveState(MoveStates.Idle);
                 break;
             case TorchStates.BurningWeb:
-                break;
-            case TorchStates.AttackDownward:
+                canMove = false;
+                SetMoveState(MoveStates.Idle);
                 break;
         }
     }
@@ -422,21 +443,33 @@ public class SaraMovement : MonoBehaviour
         switch (hitState)
         {
             case HitStates.None:
+                canMove = true;
                 break;
             case HitStates.Punching:
                 break;
             case HitStates.Kicking:
                 anim.SetTrigger("kick");
-                //speedMove = 0;
+                canMove = false;
                 SetMoveState(MoveStates.Idle);
                 //if ()
                 break;
             case HitStates.Stomping:
                 anim.SetTrigger("stomp");
+                canMove = false;
                 if (spider != null)
                 {
                     SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
                     _script.SetSpiderAction(SpidersBehavior.SpiderActions.Dying);
+                }
+                SetMoveState(MoveStates.Idle);
+                break;
+            case HitStates.TorchDownward:
+                anim.SetTrigger("attackDownward");
+                canMove = false;
+                if (spider != null)
+                {
+                    SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
+                    _script.SetSpiderAction(SpidersBehavior.SpiderActions.DyingBurn);
                 }
                 SetMoveState(MoveStates.Idle);
                 break;
@@ -452,5 +485,5 @@ public class SaraMovement : MonoBehaviour
 
     public enum TorchStates { None, GrabbingTorch, HasTorch, LightingTorch, BurningWeb, AttackDownward }
 
-    public enum HitStates { None, Punching, Kicking, Stomping }
+    public enum HitStates { None, Punching, Kicking, Stomping, TorchDownward }
 }

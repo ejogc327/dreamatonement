@@ -56,8 +56,32 @@ public class FeriaEnemies : MonoBehaviour
         Vector3 _position;
         Quaternion _rotation = Quaternion.identity;
 
-        _position = new Vector3(20f, 0f, -6.25f);
+        _position = new Vector3(7f, 0f, 13f);
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
+        i++;
 
+        _position = new Vector3(19f, 0f, 13f);
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
+        i++;
+
+        _position = new Vector3(20f, 0f, -6.25f);
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
+        i++;
+
+        _position = new Vector3(20f, 0f, -8f);
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
+        i++;
+
+        _position = new Vector3(58f, 0f, -7f);
+        spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
+        spiders[i].SetParent(transform.GetChild(1));
+        i++;
+
+        _position = new Vector3(58f, 0f, -8f);
         spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
         spiders[i].SetParent(transform.GetChild(1));
         i++;

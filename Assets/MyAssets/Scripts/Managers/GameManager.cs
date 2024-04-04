@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     void NavigateBetweenScenes()
     {
         if (Input.GetKeyDown(KeyCode.Keypad9))
@@ -93,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     void SetPausedState()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyInputs.Pause))
         {
             if (gameState == GameStates.Gameplay)
             {

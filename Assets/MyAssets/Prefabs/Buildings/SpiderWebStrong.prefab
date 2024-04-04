@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 5152061312039464786}
   m_Layer: 0
   m_Name: SpiderWebStrong
-  m_TagString: Web
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
