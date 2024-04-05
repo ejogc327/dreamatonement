@@ -11,7 +11,6 @@ public class SoundManager : MonoBehaviour
     #region Variables
     public static SoundManager instance;
     AudioSource audioSource;
-    public AudioClip[] uiSounds;
     public AudioClip[] sounds;
 
     #endregion
@@ -27,13 +26,9 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region Funciones Propias
-    public void PlayUi(int _index)
+    public void PlayUi(int _index, float _volume)
     {
-        audioSource.PlayOneShot(uiSounds[_index]);
-    }
-
-    public void Play(int _index)
-    {
+        audioSource.volume = _volume;
         audioSource.PlayOneShot(sounds[_index]);
     }
 

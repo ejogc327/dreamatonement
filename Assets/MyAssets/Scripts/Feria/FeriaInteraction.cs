@@ -18,6 +18,7 @@ public class FeriaInteraction : MonoBehaviour
     public Transform barrelOrigin;
     public Transform spiderwebOrigin;
     public Transform spiderwebStrongOrigin;
+    public Transform cocoonOrigin;
     #endregion
 
     #region Funciones Unity
@@ -44,6 +45,7 @@ public class FeriaInteraction : MonoBehaviour
         CreateTorch();
         CreateBarrel();
         CreateSpiderwebs();
+        CreateCocoon();
     }
 
     public void CreateTorch()
@@ -100,7 +102,7 @@ public class FeriaInteraction : MonoBehaviour
         _position = new Vector3(0f, 0f, 0.3f);
         _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
         _spiderweb.SetParent(transform.GetChild(2));
-        _position = new Vector3(0f, 0f, 1.5f);
+        _position = new Vector3(0f, 0f, -1.5f);
         _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
         _spiderweb.SetParent(transform.GetChild(2));
 
@@ -182,6 +184,14 @@ public class FeriaInteraction : MonoBehaviour
         _spiderweb.localScale = new Vector3(1f, 1f, 1.6f);
         _spiderweb.SetParent(transform.GetChild(2));
 
+    }
+
+    void CreateCocoon()
+    {
+        Vector3 _position = FeriaBuildings.instance.buildingsTransformData[(int)FeriaBuildings.Buildings.Carousel].position + new Vector3(2f, 0f, 2f);
+        Quaternion _rotation = Quaternion.Euler(90f, 0f, 0f);
+        Transform _cocoon = Instantiate(cocoonOrigin, _position, _rotation);
+        _cocoon.SetParent(transform.GetChild(1));
     }
     #endregion
 }

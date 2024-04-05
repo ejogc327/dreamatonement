@@ -15,6 +15,7 @@ TagManager:
   - Web
   - Fire
   - Spiders
+  - SpidersMedium
   layers:
   - Default
   - TransparentFX

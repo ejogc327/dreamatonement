@@ -14,11 +14,13 @@ public class SpidersBehavior : MonoBehaviour
     public bool move;
     public TransformData destination;
     public float diff;
+    public float attackDistance;
     float counter;
     bool isOnAttack;
     public Vector3 initialPosition;
     public Transform sara;
     int numAttack;
+    public int life;
 
     NavMeshAgent agent;
     //Animator anim;
@@ -45,6 +47,8 @@ public class SpidersBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spiderAction == SpiderActions.Dying)
+            return;
         if (spiderAction == SpiderActions.MoveToSara)
         {
             UpdateSpiderAction();
@@ -88,7 +92,7 @@ public class SpidersBehavior : MonoBehaviour
     {
         diff = (transform.position - sara.position).magnitude;
 
-        if (diff <= 0.5f && (spiderAction == SpiderActions.Idle || spiderAction == SpiderActions.MoveToSara))
+        if (diff <= attackDistance && (spiderAction == SpiderActions.Idle || spiderAction == SpiderActions.MoveToSara))
         {
             SetSpiderAction(SpiderActions.Attacking);
         }
@@ -117,6 +121,14 @@ public class SpidersBehavior : MonoBehaviour
 
         Debug.Log("Atacando..." + numAttack);
         SetSpiderAction(SpiderActions.MoveToSara);
+    }
+
+    public void IsAttacked(int _damage)
+    {
+        if (life > 0)
+            life -= _damage;
+        if (life <= 0)
+            SetSpiderAction(SpiderActions.Dying);
     }
 
     void RaycastToFront()
@@ -170,12 +182,14 @@ public class SpidersBehavior : MonoBehaviour
                 transform.GetChild(1).gameObject.SetActive(true);
                 agent.isStopped = true;
                 transform.GetComponent<SphereCollider>().enabled = false;
+                enabled = false;
                 break;
             case SpiderActions.DyingBurn:
                 anim.Play("death1");
                 transform.GetChild(1).gameObject.SetActive(true);
                 agent.isStopped = true;
                 transform.GetComponent<SphereCollider>().enabled = false;
+                enabled = false;
                 break;
         }
     }

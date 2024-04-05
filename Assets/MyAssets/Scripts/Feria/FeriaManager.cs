@@ -69,6 +69,7 @@ public class FeriaManager : MonoBehaviour
     private void Update()
     {
         //if 
+        ChangeStates();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -95,6 +96,11 @@ public class FeriaManager : MonoBehaviour
             //isPlayerInside = true;
             SetFeriaState(FeriaStates.KinematicsCarousel);
         }
+        if (state == FeriaStates.Gameplay4 && other.gameObject.CompareTag("Player"))
+        {
+            //isPlayerInside = true;
+            SetFeriaState(FeriaStates.End);
+        }
     }
 
 
@@ -108,11 +114,51 @@ public class FeriaManager : MonoBehaviour
     #endregion
 
     #region Funciones Propias
+    void ChangeStates()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            if (state == FeriaStates.Gameplay4)
+                SetFeriaState(FeriaStates.KinematicsCarousel);
+            if (state == FeriaStates.KinematicsCarousel)
+                SetFeriaState(FeriaStates.Gameplay3);
+            if (state == FeriaStates.Gameplay3)
+                SetFeriaState(FeriaStates.KinematicsTransition);
+            if (state == FeriaStates.KinematicsTransition)
+                SetFeriaState(FeriaStates.Gameplay2);
+            if (state == FeriaStates.Gameplay2)
+                SetFeriaState(FeriaStates.KinematicsMap);
+            if (state == FeriaStates.KinematicsMap)
+                SetFeriaState(FeriaStates.Gameplay1);
+            if (state == FeriaStates.Gameplay1)
+                SetFeriaState(FeriaStates.Intro);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            if (state == FeriaStates.Intro)
+                SetFeriaState(FeriaStates.Gameplay1);
+            if (state == FeriaStates.Gameplay1)
+                SetFeriaState(FeriaStates.KinematicsMap);
+            if (state == FeriaStates.KinematicsMap)
+                SetFeriaState(FeriaStates.Gameplay2);
+            if (state == FeriaStates.Gameplay2)
+                SetFeriaState(FeriaStates.KinematicsTransition);
+            if (state == FeriaStates.KinematicsTransition)
+                SetFeriaState(FeriaStates.Gameplay3);
+            if (state == FeriaStates.Gameplay3)
+                SetFeriaState(FeriaStates.KinematicsCarousel);
+            if (state == FeriaStates.KinematicsCarousel)
+                SetFeriaState(FeriaStates.Gameplay4);
+        }
+    }
+
     public void UpdateFeriaState()
     {
 
     }
+    #endregion
 
+    #region Maquina de estado
     public void SetFeriaState(FeriaStates _newState)
     {
         state = _newState;
@@ -121,7 +167,7 @@ public class FeriaManager : MonoBehaviour
         switch (state)
         {
             case FeriaStates.Intro:
-                _brain.m_DefaultBlend.m_Style = CinemachineBlendDefinition.Style.Cut;
+                _brain.m_DefaultBlend.m_Style = CinemachineBlendDefinition.Style.EaseInOut;
                 postProcessing.m_Profile = profiles[0];
 
                 vc0.m_Priority = 0;
@@ -207,7 +253,7 @@ public class FeriaManager : MonoBehaviour
                 RenderSettings.fog = true;
                 RenderSettings.fogDensity = 0f;
 
-                //MusicManager.instance.Pause();
+                MusicManager.instance.Pause(1);
                 //MusicManager.instance.Play(2);
                 break;
             case FeriaStates.Gameplay3:
@@ -236,7 +282,7 @@ public class FeriaManager : MonoBehaviour
 
                 vcThirdPersonSara.m_Priority = 0;
                 vcCarousel.m_Priority = 2;
-                
+
                 CameraCarousel _script = vcCarousel.GetComponent<CameraCarousel>();
                 _script.StartAnimation();
 
@@ -258,16 +304,36 @@ public class FeriaManager : MonoBehaviour
                 postProcessing.m_Profile = profiles[2];
                 //postProcessing.enabled = true;
 
+                transform.GetChild(1).GetChild(0).gameObject.SetActive(false);// desactivar triger final
+                transform.GetChild(1).GetChild(1).gameObject.SetActive(false);// desactivar triger final
+                transform.GetChild(1).GetChild(2).gameObject.SetActive(false);// desactivar triger final
+                transform.GetChild(1).GetChild(3).gameObject.SetActive(true);// activar triger final
+
                 SaraBehavior.instance.StartPositionInFeriaGameplay4();
                 FeriaCharacters.instance.DestroyFeriaPeople();
                 FeriaInteraction.instance.CreateInteractions();
                 FeriaEnemies.instance.CreateSpiders();
+                FeriaEnemies.instance.CreateSpidersMedium();
 
-                saraMovementScript.enabled = true;
+                saraMovementScript.enabled = true;                
                 saraBehaviorScript.enabled = false;
+                SaraMovement.instance.SetMoveState(SaraMovement.MoveStates.Idle);
 
                 RenderSettings.fog = true;
                 RenderSettings.fogDensity = 0.15f;
+
+                dialogue = "Sara:\r\n\r\n¿QUÉ HA SIDO ESTO?.\r\n¿QUÉ ERA ESA BESTIA?\r\n¿DÓNDE ESTÁ MATI?\r\n\r\nDebería ir al carrusel.";
+                HudManager.instance.UpdateDialogue(dialogue);
+
+                MusicManager.instance.Restart(1);
+                break;
+            case FeriaStates.End:
+                _trigger = transform.GetChild(1).GetChild(3).gameObject;
+                _trigger.SetActive(false);
+
+                GameManager.instance.InfoTransition(2, GameStates.EndMenu);
+                GameManager.instance.SetGameState(GameStates.Loading);
+
                 break;
         }
     }
@@ -304,7 +370,7 @@ public class FeriaManager : MonoBehaviour
 
     public void Transition_Beat()
     {
-        SoundManager.instance.PlayUi(2);
+        SoundManager.instance.PlayUi(2, 1f);
         RenderSettings.fogDensity += 0.03f;
     }
 
@@ -317,7 +383,7 @@ public class FeriaManager : MonoBehaviour
     public enum FeriaStates
     {
         Intro, Gameplay1, KinematicsMap, Gameplay2, KinematicsTransition, Gameplay3, 
-        KinematicsCarousel, Gameplay4
+        KinematicsCarousel, Gameplay4, End
     }
 }
 

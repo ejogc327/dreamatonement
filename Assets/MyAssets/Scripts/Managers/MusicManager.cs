@@ -10,13 +10,10 @@ public class MusicManager : MonoBehaviour
 {
     #region Variables
     public static MusicManager instance;
-    AudioSource audioSource;
+    public AudioSource mainMenuAudioSource;
+    public AudioSource gameplayAudioSource;
     public AudioClip musicMainMenu;
     public AudioClip[] musicGameplay;
-
-    public float menuMusicTime;
-    public float gameplayMusicTime;
-
     #endregion
 
     #region Funciones Unity
@@ -24,7 +21,7 @@ public class MusicManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
     }
     #endregion
 
@@ -33,78 +30,76 @@ public class MusicManager : MonoBehaviour
     {
         if (_num == 0)
         {
-            audioSource.clip = musicMainMenu;
-            audioSource.Play();
+            Debug.Log("Ejecutando main Menu");
+            mainMenuAudioSource.clip = musicMainMenu;
+            mainMenuAudioSource.Play();
         }
         else if (_num <= musicGameplay.Length)
         {
-            if (audioSource.clip != null)         
+            if (gameplayAudioSource.clip != null)
             {
-                if (audioSource.clip != musicGameplay[_num - 1])
+                if (gameplayAudioSource.clip != musicGameplay[_num - 1])
                 {
-                    audioSource.clip = musicGameplay[_num - 1];
-                    audioSource.Play();
+                    gameplayAudioSource.clip = musicGameplay[_num - 1];
+                    gameplayAudioSource.Play();
                 }
                 else
-                    Resume();
+                    Resume(_num);
             }
             else
             {
-                audioSource.clip = musicGameplay[_num - 1];
-                audioSource.Play();
+                gameplayAudioSource.clip = musicGameplay[_num - 1];
+                gameplayAudioSource.Play();
             }
         }
     }
 
-    public void Pause()
+    public void Pause(int _num)
     {
-        if (audioSource.isPlaying)
-            audioSource.Pause();
+        if (_num == 0)
+        {
+            if (mainMenuAudioSource.isPlaying)
+                mainMenuAudioSource.Pause();
+        }
+        else
+        {
+            if (gameplayAudioSource.isPlaying)
+                gameplayAudioSource.Pause();
+        }
     } 
 
-    public void Resume()
-    {
-        if (!audioSource.isPlaying)
-            audioSource.UnPause();
-    }
-
-    public void Restart()
-    { 
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Stop();
-            audioSource.Play();
-        }
-    }
-
-    public void SaveTime(int _num)
+    public void Resume(int _num)
     {
         if (_num == 0)
         {
-            menuMusicTime = audioSource.time;
+            if (!mainMenuAudioSource.isPlaying)
+                mainMenuAudioSource.UnPause();
         }
         else
         {
-            gameplayMusicTime = audioSource.time;
+            if (!gameplayAudioSource.isPlaying)
+                gameplayAudioSource.UnPause();
         }
     }
 
-    public void LoadTime(int _num)
+    public void Restart(int _num)
     {
         if (_num == 0)
         {
-            audioSource.time = menuMusicTime;
+            if (!mainMenuAudioSource.isPlaying)
+            {
+                mainMenuAudioSource.Stop();
+                mainMenuAudioSource.Play();
+            }
         }
         else
         {
-            audioSource.time = gameplayMusicTime;
+            if (!gameplayAudioSource.isPlaying)
+            {
+                gameplayAudioSource.Stop();
+                gameplayAudioSource.Play();
+            }
         }
-    }
-
-    public void PlayInTime(int _num)
-    {
-        LoadTime(_num);
-        Play(_num);
     }
     #endregion
 }

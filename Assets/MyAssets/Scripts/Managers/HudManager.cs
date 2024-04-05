@@ -33,6 +33,15 @@ public class HudManager : MonoBehaviour
     {
         instance = this;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            helpBackground.gameObject.SetActive(!helpBackground.gameObject.activeSelf);
+
+        }
+    }
     #endregion
 
     #region Funciones Propias

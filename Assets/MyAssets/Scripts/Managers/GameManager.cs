@@ -133,9 +133,11 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameStates.MainMenu:
-			    Time.timeScale = 1f; //velocidad de la simulación
+                Time.timeScale = 1f; //velocidad de la simulación
                 MusicManager.instance.Play(0);
-                break; 
+                MusicManager.instance.Play(1);
+                MusicManager.instance.Pause(1);
+                break;
             case GameStates.Loading:
                 Time.timeScale = 1f;
                 TransitionManager.instance.Transition_FadeInStart();
@@ -150,10 +152,16 @@ public class GameManager : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                 }
+                else if (gameStateAfterTransition == GameStates.EndMenu)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
                 break;
             case GameStates.Gameplay:
                 Time.timeScale = 1f;
-                MusicManager.instance.Pause();
+                MusicManager.instance.Pause(0);
+                MusicManager.instance.Resume(1);
 
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -162,12 +170,17 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.PauseMenu:
                 Time.timeScale = 0f;
-                MusicManager.instance.Resume();
+                MusicManager.instance.Resume(0);
+                MusicManager.instance.Pause(1);
 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
 
                 PauseMenuManager.instance.ShowPanelHall();
+                break;
+            case GameStates.EndMenu:
+                Time.timeScale = 1f; //velocidad de la simulación
+                MusicManager.instance.Play(0);
                 break;
         }
     }
@@ -179,7 +192,8 @@ public enum GameStates
     MainMenu, 
     Loading,
     Gameplay,
-    PauseMenu 
+    PauseMenu, 
+    EndMenu
 }
 
 public enum Levels

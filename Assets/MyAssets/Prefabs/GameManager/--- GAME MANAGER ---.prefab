@@ -450,11 +450,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4316c291b1ee53469f211c7964df4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiSounds:
+  sounds:
   - {fileID: 8300000, guid: 6e79f4e950bfd5e4d854dc52ce9c1cc0, type: 3}
   - {fileID: 8300000, guid: f8ba4937730576748ac11c682ab64521, type: 3}
   - {fileID: 8300000, guid: cfa3f9f8094c62c459f2b7fe175a9eeb, type: 3}
-  sounds: []
+  - {fileID: 8300000, guid: 29c99d96d29833b4fa720bbaa76ae918, type: 3}
+  - {fileID: 8300000, guid: d1ade164e399036488d5daba34d4bb6f, type: 3}
+  - {fileID: 8300000, guid: 44e2bd0f9368b1f49a510cc29bfae59c, type: 3}
+  - {fileID: 8300000, guid: 00ecc0abad8f24444a81c2106e513c06, type: 3}
 --- !u!1 &6399991709009176861
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5482642991424173060}
   - component: {fileID: 8766005282026282192}
+  - component: {fileID: 3712778365913917514}
   - component: {fileID: 7503450635354471117}
   m_Layer: 0
   m_Name: 1. MusicManager
@@ -811,6 +815,102 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &3712778365913917514
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8089278260873553895}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &7503450635354471117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,7 +923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cdfe813e64a83e42ad4344eb3effb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuAudioSource: {fileID: 8766005282026282192}
+  gameplayAudioSource: {fileID: 3712778365913917514}
   musicMainMenu: {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}
   musicGameplay:
   - {fileID: 8300000, guid: 72c481367ae6a7d40881dc764283c644, type: 3}
-  - {fileID: 8300000, guid: d59277b0b98a3914eaf43cea3d0ca2c1, type: 3}
+  - {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}

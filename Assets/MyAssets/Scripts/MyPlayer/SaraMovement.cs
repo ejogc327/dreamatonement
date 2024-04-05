@@ -19,7 +19,7 @@ public class SaraMovement : MonoBehaviour
 
     Vector2 axis;
     Vector3 dirMove;
-    bool canMove;
+    public bool canMove;
     float speedMove;
     public float speedRot;
     public float speedWalk;
@@ -34,11 +34,15 @@ public class SaraMovement : MonoBehaviour
     public bool isOnFire;
     public bool isOnWeb;
     public bool isOnSpider;
+    public bool isNextSpider;
     public bool hasFobia;
+
+    float soundTimer;
 
     Transform torch;
     Transform spiderWeb;
-    Transform spider;
+    public Transform spider;
+    public Transform spiderMedium;
 
     Transform cam;
     Rigidbody rb;
@@ -71,13 +75,14 @@ public class SaraMovement : MonoBehaviour
         {
             SetVirtualAxis();
             SetMoveDirection();
-            UpdateMoveState();
             SoftedRotation();
             Jump();
             Grab();
+            StepsSound();
         }
         //StopMovement();
 
+        UpdateMoveState();
         UpdateHit();
         UpdateTorch();
         //Run();
@@ -130,6 +135,12 @@ public class SaraMovement : MonoBehaviour
             isOnSpider = true;
             spider = other.transform;
         }
+
+        if (other.gameObject.CompareTag("SpidersMedium"))
+        {
+            isNextSpider = true;
+            spiderMedium = other.transform;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -156,6 +167,11 @@ public class SaraMovement : MonoBehaviour
         {
             isOnSpider = false;
             spider = null;
+        }
+        if (other.gameObject.CompareTag("SpidersMedium"))
+        {
+            isNextSpider = false;
+            spiderMedium = null;
         }
     }
 
@@ -237,6 +253,22 @@ public class SaraMovement : MonoBehaviour
         //}
     }
 
+    void StepsSound()
+    {
+        if (speedMove > 1)
+        {
+            if (soundTimer >= 1f)
+            {
+                SoundManager.instance.PlayUi(3, 0.1f);
+                soundTimer = 0f;
+            }
+            else
+            {
+                soundTimer += Time.deltaTime * speedMove;
+            }
+        }
+    }
+
     void UpdateTorch()
     {
         if (Input.GetKeyDown(KeyCode.I) && torchState == TorchStates.HasTorch)
@@ -292,20 +324,25 @@ public class SaraMovement : MonoBehaviour
 
     void UpdateHit()
     {
-        if (Input.GetKeyDown(KeyCode.J) && hitState == HitStates.None)
+        if (Input.GetKeyDown(KeyCode.T) && hitState == HitStates.None)
         {
             //anim.SetTrigger("kick");
             SetHitState(HitStates.Kicking);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && hitState == HitStates.None)
+        if (Input.GetKeyDown(KeyCode.G) && hitState == HitStates.None)
         {
             SetHitState(HitStates.Stomping);
         }
 
-        if (Input.GetKeyDown(KeyCode.U) && hitState == HitStates.None && torchState == TorchStates.HasTorch)
+        if (Input.GetKeyDown(KeyCode.Y) && hitState == HitStates.None && torchState == TorchStates.HasTorch)
         {
             SetHitState(HitStates.TorchDownward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.H) && hitState == HitStates.None && torchState == TorchStates.HasTorch)
+        {
+            SetHitState(HitStates.PunchTorch);
         }
     }
     
@@ -451,7 +488,12 @@ public class SaraMovement : MonoBehaviour
                 anim.SetTrigger("kick");
                 canMove = false;
                 SetMoveState(MoveStates.Idle);
-                //if ()
+                if (spiderMedium != null)
+                {
+                    SpidersBehavior _script = spiderMedium.GetComponent<SpidersBehavior>();
+                    _script.IsAttacked(1);
+                    SoundManager.instance.PlayUi(6, 1f);
+                }
                 break;
             case HitStates.Stomping:
                 anim.SetTrigger("stomp");
@@ -459,7 +501,8 @@ public class SaraMovement : MonoBehaviour
                 if (spider != null)
                 {
                     SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
-                    _script.SetSpiderAction(SpidersBehavior.SpiderActions.Dying);
+                    _script.IsAttacked(1);
+                    SoundManager.instance.PlayUi(5, 1f);
                 }
                 SetMoveState(MoveStates.Idle);
                 break;
@@ -469,7 +512,19 @@ public class SaraMovement : MonoBehaviour
                 if (spider != null)
                 {
                     SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
-                    _script.SetSpiderAction(SpidersBehavior.SpiderActions.DyingBurn);
+                    _script.IsAttacked(1);//.SetSpiderAction(SpidersBehavior.SpiderActions.Dying);
+                    SoundManager.instance.PlayUi(6, 1f);
+                }
+                SetMoveState(MoveStates.Idle);
+                break;
+            case HitStates.PunchTorch:
+                anim.SetTrigger("punchTorch");
+                canMove = false;
+                if (spider != null)
+                {
+                    SpidersBehavior _script = spider.GetComponent<SpidersBehavior>();
+                    _script.IsAttacked(1);//.SetSpiderAction(SpidersBehavior.SpiderActions.Dying);
+                    SoundManager.instance.PlayUi(6, 1f);
                 }
                 SetMoveState(MoveStates.Idle);
                 break;
@@ -485,5 +540,5 @@ public class SaraMovement : MonoBehaviour
 
     public enum TorchStates { None, GrabbingTorch, HasTorch, LightingTorch, BurningWeb, AttackDownward }
 
-    public enum HitStates { None, Punching, Kicking, Stomping, TorchDownward }
+    public enum HitStates { None, Punching, Kicking, Stomping, TorchDownward, PunchTorch }
 }

@@ -18,6 +18,8 @@ public class FeriaEnemies : MonoBehaviour
     public Transform spidersMediumOrigin;
     List<Transform> spidersMedium = new List<Transform>();
 
+    
+
     #endregion
 
     #region 2. Funciones Unity
@@ -100,7 +102,7 @@ public class FeriaEnemies : MonoBehaviour
         i++;
 
         _position = new Vector3(55f, 0f, -2f);
-        spiders.Add(Instantiate(spidersMediumOrigin, _position, _rotation));
+        spidersMedium.Add(Instantiate(spidersMediumOrigin, _position, _rotation));
         spidersMedium[i].SetParent(transform.GetChild(1));
         i++;
 

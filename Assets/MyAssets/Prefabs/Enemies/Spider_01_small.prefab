@@ -95,8 +95,10 @@ MonoBehaviour:
   play: 0
   move: 0
   diff: 0
+  attackDistance: 0.5
   initialPosition: {x: 0, y: 0, z: 0}
   sara: {fileID: 0}
+  life: 2
 --- !u!1 &2051618503573049836
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ public class MainMenuManager : MonoBehaviour
     #region Funciones Propias
     public void BtnStart_Pressed()
     {
-        SoundManager.instance.PlayUi(0);
+        SoundManager.instance.PlayUi(0, 1f);
         GameManager.instance.SetLevel(Levels.Level1);
         GameManager.instance.InfoTransition(1, GameStates.Gameplay);
         GameManager.instance.SetGameState(GameStates.Loading);
@@ -51,7 +51,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void BtnExit_Pressed()
     {
-        SoundManager.instance.PlayUi(0);
+        SoundManager.instance.PlayUi(0, 1f);
         panelHall.SetActive(false);
         panelConfirmExit.SetActive(true);
     }
@@ -63,7 +63,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void BtnCancelExit_Pressed()
     {
-        SoundManager.instance.PlayUi(1);        
+        SoundManager.instance.PlayUi(1, 1f);        
         panelHall.SetActive(true);
         panelConfirmExit.SetActive(false);
     }

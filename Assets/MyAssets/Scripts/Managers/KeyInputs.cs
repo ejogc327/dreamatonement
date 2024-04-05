@@ -9,7 +9,7 @@ using System;
 
 public static class KeyInputs
 {
-	public static KeyCode Pause = KeyCode.Escape;
+	public static KeyCode Pause = KeyCode.Tab;
 	public static KeyCode Jump = KeyCode.Space;
     public static KeyCode Run = KeyCode.LeftShift;
 	//public KeyCode Kick = KeyCode.

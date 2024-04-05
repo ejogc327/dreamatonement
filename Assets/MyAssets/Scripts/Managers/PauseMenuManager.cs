@@ -128,7 +128,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void BtnConfirmRestart_Pressed()
     {
-        MusicManager.instance.Restart();
+        MusicManager.instance.Restart(1);
         GameManager.instance.InfoTransition(1, GameStates.Gameplay);
         GameManager.instance.SetGameState(GameStates.Loading);
     }
