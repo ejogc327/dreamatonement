@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MyAssets/Scenes/EndScene.unity
     guid: 5fd5f59060ab1ab4988e031a1c8f27cd
+  - enabled: 1
+    path: Assets/MyAssets/Scenes/GameOverScene.unity
+    guid: 00590bcf89521e44c925d4ef70f0101c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2cddb3ad3339af848aabea3cd7a4ef4c, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 29a534c1833e37049a6c47b4f739202a, type: 2}

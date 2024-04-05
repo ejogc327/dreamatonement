@@ -16,6 +16,7 @@ TagManager:
   - Fire
   - Spiders
   - SpidersMedium
+  - WebStrong
   layers:
   - Default
   - TransparentFX

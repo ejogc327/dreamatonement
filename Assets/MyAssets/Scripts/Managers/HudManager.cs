@@ -57,6 +57,7 @@ public class HudManager : MonoBehaviour
 
     public void UpdateDialogue(string _text)
     {
+        dialogueText.text = "";
         StartCoroutine(UpdateDialogueCoroutine(_text));
     }
     public void UpdateHelp(string _text)

@@ -24,8 +24,8 @@ public class PlayerDataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerData.maxLife = 100f;
-        playerData.lifeActual = 100f;
+        playerData.maxLife = 100;
+        playerData.lifeActual = 100;
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class PlayerDataManager : MonoBehaviour
     #endregion
 
     #region Funciones Propias
-    public void AddLife(float _increase)
+    public void AddLife(int _increase)
     {
         playerData.lifeActual += _increase;
         if (playerData.lifeActual > playerData.maxLife)
@@ -47,17 +47,16 @@ public class PlayerDataManager : MonoBehaviour
     }
 
 
-    public void SubstractLife(float _decrease)
+    public void SubstractLife(int _decrease)
     {
         playerData.lifeActual -= _decrease;
-        if (playerData.lifeActual <= 0f)
+        if (playerData.lifeActual <= 0)
         {
-            playerData.lifeActual = 0f;
-            //GameManager.instance.SetGameState(GameState.GameOver);
+            playerData.lifeActual = 0;
+            GameManager.instance.InfoTransition(3, GameStates.GameOver);
+            GameManager.instance.SetGameState(GameStates.Loading);
         }
         HudManager.instance.UpdateLifeBar();
-
-
     }
 
     #endregion
@@ -66,6 +65,6 @@ public class PlayerDataManager : MonoBehaviour
 [Serializable]
 public class PlayerData
 {
-	public float lifeActual;
-	public float maxLife;
+	public int lifeActual;
+	public int maxLife;
 }

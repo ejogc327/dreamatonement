@@ -69,7 +69,7 @@ public class FeriaManager : MonoBehaviour
     private void Update()
     {
         //if 
-        ChangeStates();
+        //ChangeStates();
     }
 
     private void OnTriggerEnter(Collider other)

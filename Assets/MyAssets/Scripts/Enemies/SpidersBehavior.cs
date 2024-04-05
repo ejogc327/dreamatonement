@@ -16,10 +16,10 @@ public class SpidersBehavior : MonoBehaviour
     public float diff;
     public float attackDistance;
     float counter;
-    bool isOnAttack;
     public Vector3 initialPosition;
     public Transform sara;
     int numAttack;
+    public int powerAttack;
     public int life;
 
     NavMeshAgent agent;
@@ -56,11 +56,6 @@ public class SpidersBehavior : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        RaycastToFront();
-    }
-
     /*void OnCollisionEnter(Collision collision)
     {
         destination = Vector3.right;
@@ -72,6 +67,7 @@ public class SpidersBehavior : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Ha detectado a Sara");
+
             SetSpiderAction(SpiderActions.MoveToSara);
         }
     }
@@ -96,6 +92,17 @@ public class SpidersBehavior : MonoBehaviour
         {
             SetSpiderAction(SpiderActions.Attacking);
         }
+
+        if (diff <= attackDistance)
+        {
+            if (SaraMovement.instance.spider == null)
+                SaraMovement.instance.spider = transform;
+        }
+        else
+        {
+            if (SaraMovement.instance.spider == transform)
+                SaraMovement.instance.spider = null;
+        }
     }
 
     public void MovingToSara()
@@ -115,11 +122,7 @@ public class SpidersBehavior : MonoBehaviour
     IEnumerator WaitAttack()
     {
         yield return new WaitForSeconds(2f);
-        numAttack++;
-        if (isOnAttack)
-            PlayerDataManager.instance.SubstractLife(1f);
-
-        Debug.Log("Atacando..." + numAttack);
+        PlayerDataManager.instance.SubstractLife(powerAttack);
         SetSpiderAction(SpiderActions.MoveToSara);
     }
 
@@ -129,28 +132,6 @@ public class SpidersBehavior : MonoBehaviour
             life -= _damage;
         if (life <= 0)
             SetSpiderAction(SpiderActions.Dying);
-    }
-
-    void RaycastToFront()
-    {
-        Ray _ray = new Ray(transform.position + new Vector3(0f, 0.1f, 0f), transform.forward);
-        RaycastHit _hit;
-        bool _result = Physics.Raycast(_ray, out _hit, 0.3f);
-
-        if (_result)
-        {
-            Debug.DrawRay(_ray.origin, _ray.direction * _hit.distance, Color.red);
-            if (_hit.transform.CompareTag("Player"))
-            {
-                isOnAttack = true;
-            }
-            else isOnAttack = false;
-        }
-        else
-        {
-            Debug.DrawRay(_ray.origin, _ray.direction * 0.3f, Color.green);
-            isOnAttack = false;
-        }
     }
 
     public void SetSpiderAction(SpiderActions _newAction)
@@ -165,7 +146,6 @@ public class SpidersBehavior : MonoBehaviour
             case SpiderActions.MoveToSara:
                 agent.isStopped = false;
                 anim.Play("walk");
-                StopCoroutine(WaitAttack());
                 break;
             case SpiderActions.BackToInitialPosition:
                 agent.isStopped = false;
@@ -183,6 +163,9 @@ public class SpidersBehavior : MonoBehaviour
                 agent.isStopped = true;
                 transform.GetComponent<SphereCollider>().enabled = false;
                 enabled = false;
+
+                if (SaraMovement.instance.spider == transform)
+                    SaraMovement.instance.spider = null;
                 break;
             case SpiderActions.DyingBurn:
                 anim.Play("death1");
@@ -190,6 +173,9 @@ public class SpidersBehavior : MonoBehaviour
                 agent.isStopped = true;
                 transform.GetComponent<SphereCollider>().enabled = false;
                 enabled = false;
+
+                if (SaraMovement.instance.spider == transform)
+                    SaraMovement.instance.spider = null;
                 break;
         }
     }

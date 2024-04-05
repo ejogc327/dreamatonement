@@ -927,5 +927,6 @@ MonoBehaviour:
   gameplayAudioSource: {fileID: 3712778365913917514}
   musicMainMenu: {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}
   musicGameplay:
-  - {fileID: 8300000, guid: 72c481367ae6a7d40881dc764283c644, type: 3}
+  - {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}
+  - {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}
   - {fileID: 8300000, guid: 78279ace524ac1744b98ae020ce3c371, type: 3}

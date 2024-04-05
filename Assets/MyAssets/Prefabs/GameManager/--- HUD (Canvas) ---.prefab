@@ -140,9 +140,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "T: Patada\n\nG: Pisot\xF3n\n\nY: Atacar al suelo (T)\n\nH: Atacar antorcha\n\nC:
-    Recoger\n\nCtrl+M: Mostrar minimapa\n\nM: Mostrar Mapa\nI: Encender antorcha\n\nO:
-    Destruir con antorcha"
+  m_text: "W: Arriba\n\nS: Abajo\n\nA: Izquierda\n\nD: Derecha\n\nMouse para girar\n\nMayusc
+    Izq: Correr\n\nEspacio: Saltar\n\nTab: Pausa\n\nF: Patada\n\nG: Pisot\xF3n\n\nR:
+    Atacar al suelo (T)\n\nT: Atacar antorcha\n\nE: Acci\xF3n\n\nCtrl+M: Mostrar
+    minimapa\n\nM: Mostrar Mapa\n\nP: Ayuda de teclado"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -852,7 +853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &996166698929418424
 RectTransform:
   m_ObjectHideFlags: 0

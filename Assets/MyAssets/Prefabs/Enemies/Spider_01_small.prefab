@@ -71,7 +71,7 @@ NavMeshAgent:
   m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 400
-  m_StoppingDistance: 0.2
+  m_StoppingDistance: 0.3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -98,6 +98,7 @@ MonoBehaviour:
   attackDistance: 0.5
   initialPosition: {x: 0, y: 0, z: 0}
   sara: {fileID: 0}
+  powerAttack: 2
   life: 2
 --- !u!1 &2051618503573049836
 GameObject:

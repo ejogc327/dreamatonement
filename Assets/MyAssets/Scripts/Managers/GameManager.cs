@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         NavigateBetweenScenes();
         SetPausedState();
+        
     }
 
     #endregion
@@ -157,6 +158,11 @@ public class GameManager : MonoBehaviour
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                 }
+                else if (gameStateAfterTransition == GameStates.GameOver)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
                 break;
             case GameStates.Gameplay:
                 Time.timeScale = 1f;
@@ -182,6 +188,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f; //velocidad de la simulación
                 MusicManager.instance.Play(0);
                 break;
+            case GameStates.GameOver:
+                Time.timeScale = 1f; //velocidad de la simulación
+                MusicManager.instance.Play(0);
+                break;
         }
     }
     #endregion    
@@ -193,7 +203,8 @@ public enum GameStates
     Loading,
     Gameplay,
     PauseMenu, 
-    EndMenu
+    EndMenu,
+    GameOver
 }
 
 public enum Levels
