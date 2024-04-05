@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 /// <summary>
 ///
@@ -89,6 +90,17 @@ public class SaraBehavior : MonoBehaviour
         }
     }
 
+    public void StartPositionInFeria()
+    {
+        transform.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].position;
+        transform.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].rotation;
+    }
+
+    public void StartPositionInFeriaGameplay4()
+    {
+        transform.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Entry].position + new Vector3(1f, 0f, 0f);
+        transform.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Entry].rotation;
+    }
     //void Posi
 
     void UpdateSaraAction()
@@ -126,6 +138,11 @@ public class SaraBehavior : MonoBehaviour
                 //agent.isStopped = true;
                 anim.SetInteger("move", 0);
                 break;
+            case SaraActions.Carousel:
+                //if (agen)
+                //agent.isStopped = true;
+                anim.SetInteger("move", 0);
+                break;
         }
     }
     #endregion
@@ -135,6 +152,6 @@ public class SaraBehavior : MonoBehaviour
         None,
         GoToMap,
         Transition,
-        
+        Carousel
     }
 }

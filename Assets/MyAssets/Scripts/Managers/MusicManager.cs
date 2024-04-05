@@ -14,6 +14,9 @@ public class MusicManager : MonoBehaviour
     public AudioClip musicMainMenu;
     public AudioClip[] musicGameplay;
 
+    public float menuMusicTime;
+    public float gameplayMusicTime;
+
     #endregion
 
     #region Funciones Unity
@@ -74,5 +77,34 @@ public class MusicManager : MonoBehaviour
         }
     }
 
+    public void SaveTime(int _num)
+    {
+        if (_num == 0)
+        {
+            menuMusicTime = audioSource.time;
+        }
+        else
+        {
+            gameplayMusicTime = audioSource.time;
+        }
+    }
+
+    public void LoadTime(int _num)
+    {
+        if (_num == 0)
+        {
+            audioSource.time = menuMusicTime;
+        }
+        else
+        {
+            audioSource.time = gameplayMusicTime;
+        }
+    }
+
+    public void PlayInTime(int _num)
+    {
+        LoadTime(_num);
+        Play(_num);
+    }
     #endregion
 }

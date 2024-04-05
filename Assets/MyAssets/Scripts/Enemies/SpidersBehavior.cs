@@ -167,11 +167,15 @@ public class SpidersBehavior : MonoBehaviour
                 break;
             case SpiderActions.Dying:
                 anim.Play("death2");
+                transform.GetChild(1).gameObject.SetActive(true);
                 agent.isStopped = true;
+                transform.GetComponent<SphereCollider>().enabled = false;
                 break;
             case SpiderActions.DyingBurn:
                 anim.Play("death1");
+                transform.GetChild(1).gameObject.SetActive(true);
                 agent.isStopped = true;
+                transform.GetComponent<SphereCollider>().enabled = false;
                 break;
         }
     }

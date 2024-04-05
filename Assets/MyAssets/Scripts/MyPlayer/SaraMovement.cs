@@ -258,7 +258,7 @@ public class SaraMovement : MonoBehaviour
     {
         if (isOnTorch && torch != null)
         {
-            Transform _leftHand = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0) ;
+            Transform _leftHand = transform.GetChild(0).GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
             torch.SetParent(_leftHand);
             torch.localPosition = new Vector3(-0.024f, 0.07f, 0.024f);
             torch.localRotation = Quaternion.Euler(0f, 0f, 0f);

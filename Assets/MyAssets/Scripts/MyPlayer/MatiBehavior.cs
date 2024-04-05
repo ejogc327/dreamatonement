@@ -141,6 +141,12 @@ public class MatiBehavior : MonoBehaviour
         counter = 0;
     }
 
+    public void StartPositionMati()
+    {
+        transform.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].position + Vector3.forward * 0.25f;
+        transform.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].rotation;
+    }
+
     public void SetMatiAction(MatiActions _newAction)
     {
         matiAction = _newAction;

@@ -28,17 +28,23 @@ public class FeriaInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        /*if (Input.GetKeyDown(KeyCode.L))
         {
             CreateTorch();
             CreateBarrel();
             CreateSpiderwebs();
-        }
+        }*/
     }
 
     #endregion
 
     #region Funciones Propias
+    public void CreateInteractions()
+    {
+        CreateTorch();
+        CreateBarrel();
+        CreateSpiderwebs();
+    }
 
     public void CreateTorch()
     {
@@ -85,6 +91,22 @@ public class FeriaInteraction : MonoBehaviour
 
 
         // Telarañas no destruibles
+
+        // Entrada e Información
+        _position = new Vector3(0f, 0f, 2f);
+        _rotation = Quaternion.identity;
+        _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
+        _spiderweb.SetParent(transform.GetChild(2));
+        _position = new Vector3(0f, 0f, 0.3f);
+        _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
+        _spiderweb.SetParent(transform.GetChild(2));
+        _position = new Vector3(0f, 0f, 1.5f);
+        _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
+        _spiderweb.SetParent(transform.GetChild(2));
+
+        _position = new Vector3(3f, 0f, 10.7f);
+        _spiderweb = Instantiate(spiderwebStrongOrigin, _position, _rotation);
+        _spiderweb.SetParent(transform.GetChild(2));
 
         _position = new Vector3(3.9f, 0f, 18.3f);
         _rotation = Quaternion.Euler(0f, 45f, 0f);

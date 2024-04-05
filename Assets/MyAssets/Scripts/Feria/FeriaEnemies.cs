@@ -15,6 +15,8 @@ public class FeriaEnemies : MonoBehaviour
     List<Transform> humanoids = new List<Transform>();
     public Transform spidersOrigin;
     List<Transform> spiders = new List<Transform>();
+    public Transform spidersMediumOrigin;
+    List<Transform> spidersMedium = new List<Transform>();
 
     #endregion
 
@@ -31,10 +33,10 @@ public class FeriaEnemies : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)) 
+        /*if (Input.GetKeyDown(KeyCode.L)) 
         {
             CreateSpiders();
-        }
+        }*/
     }
     #endregion
 
@@ -85,6 +87,23 @@ public class FeriaEnemies : MonoBehaviour
         spiders.Add(Instantiate(spidersOrigin, _position, _rotation));
         spiders[i].SetParent(transform.GetChild(1));
         i++;
+    }
+    public void CreateSpidersMedium()
+    {
+        int i = 0;
+        Vector3 _position;
+        Quaternion _rotation = Quaternion.identity;
+
+        _position = new Vector3(55f, 0f, -7f);
+        spidersMedium.Add(Instantiate(spidersMediumOrigin, _position, _rotation));
+        spidersMedium[i].SetParent(transform.GetChild(1));
+        i++;
+
+        _position = new Vector3(55f, 0f, -2f);
+        spiders.Add(Instantiate(spidersMediumOrigin, _position, _rotation));
+        spidersMedium[i].SetParent(transform.GetChild(1));
+        i++;
+
     }
 
     void CheckIfOverlap(Transform _transform)

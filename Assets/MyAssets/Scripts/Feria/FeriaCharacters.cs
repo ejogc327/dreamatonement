@@ -33,12 +33,7 @@ public class FeriaCharacters : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            DestroyEmployees();
-            DestroyPeople();
-            DestroyKids();
-        }
+        
     }
     #endregion
 
@@ -155,20 +150,17 @@ public class FeriaCharacters : MonoBehaviour
         }
     }
 
-    public void StartPositionSara()
+
+    public void DestroyFeriaPeople()
     {
-        sara.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].position;
-        sara.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].rotation;
-    }
-    public void StartPositionMati()
-    {
-        mati.position = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].position + Vector3.forward * 0.25f;
-        mati.rotation = FeriaBuildings.instance.peopleTransformData[(int)FeriaBuildings.PeoplePositions.Ticket1].rotation;
+        DestroyEmployees();
+        DestroyPeople();
+        DestroyKids();
     }
 
     void DestroyEmployees()
     {
-        Debug.Log("destruyendo empleados");
+        //Debug.Log("destruyendo empleados");
         foreach (Transform _t in transform.GetChild(0).transform)
         {
             Destroy(_t.gameObject);
@@ -177,7 +169,7 @@ public class FeriaCharacters : MonoBehaviour
 
     void DestroyPeople()
     {
-        Debug.Log("destruyendo gente");
+        //Debug.Log("destruyendo gente");
         foreach (Transform _t in transform.GetChild(1).transform)
         {
             Destroy(_t.gameObject);
